@@ -3,8 +3,8 @@ Summary
 
 This tool automatically generates a settings file containing shell script and environment dependency values for operation of the shell. 
 
--   [Common shell settings](シェル共通設定.xlsx)
--   [Automatically generated shell script settings for execution of jobs](ジョブ実行シェルスクリプト自動生成設定.xlsx)
+-   [Common shell settings](Shell_Common_Settings.xlsx)
+-   [Automatically generated shell script settings for execution of jobs](Job_Execution_Shell_Script_Autogeneration_Settings.xlsx)
 
 Automatically generated shell scripts are intended for the following processes. 
 
@@ -25,4 +25,4 @@ Instructions
 
 Refer to the “Explanation” sheet in the following document about the automatic shell script generation tool for information on how to use this tool. 
 
--   [Automatic shell script generation tool](シェルスクリプト自動生成ツール.xlsm)
+-   [Automatic shell script generation tool](Shell_Script_Automatic_Generation_Tool.xlsm)

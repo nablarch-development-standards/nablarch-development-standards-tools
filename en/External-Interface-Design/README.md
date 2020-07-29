@@ -9,4 +9,4 @@ Automatically generates external interface definition files to be used by the fr
 Instructions
 ------------
 
-Refer to the instructions provided in the tool (`Tool for automatic generation of format definition files.xlsm`).
+Refer to the instructions provided in the tool (`Automatic_Format_Definition_File_Generation_Tool.xlsm`).
