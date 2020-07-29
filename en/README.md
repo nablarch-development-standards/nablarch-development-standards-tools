@@ -47,7 +47,7 @@ This document explains how to output table definitions using the report output f
 
 * Automatic generation tool for main exclusive control key classes  
 Automatically generates main exclusive control key classes based on the table definitions.  
-[Physical/Java object mapping definitions](DB_Design/Physical_Type_Java_Object_Mapping_Definition.xls) are required to use this tool.
+[Physical/Java object mapping definitions](DB-Design/Physical_Type_Java_Object_Mapping_Definition.xls) are required to use this tool.
 
 
 * Automatic generation tool for domain classes  
