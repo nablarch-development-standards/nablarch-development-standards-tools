@@ -45,8 +45,8 @@ Checks that domains indicated in the table definitions are defined according to 
 This document explains how to output table definitions using the report output function of the ObjectBrowser.  
 
 
-* Automatic generation tool for main exclusive control key classes  
-Automatically generates main exclusive control key classes based on the table definitions.  
+* Automatic generation tool for exclusive control primary key class.  
+Automatically generates exclusive control primary key class based on the table definitions.  
 [Physical/Java object mapping definitions](DB-Design/Physical_Type_Java_Object_Mapping_Definition.xls) are required to use this tool.
 
 
