@@ -6,7 +6,7 @@
 
 # Development process support tools
 
-These tools provide support for Nablarch’s development process. 
+These tools provide support for Nablarch's development process. 
 For tools that do not have a manual, instructions have been provided in the Excel download file. 
 
 When using development process support tools that use design documents for input/output, 
@@ -61,17 +61,17 @@ Automatically generates domain setting Java class files based on the domain defi
 [Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/JspStaticAnalysis/index.html)
   
 
-* gsp-dba-maven-plugin ([coastland/gsp-dba-maven-plugin](https://github.com/coastland/gsp-dba-maven-plugin))  
+* gsp-dba-maven-plugin ([coastland/gsp-dba-maven-plugin](https://github.com/coastland/gsp-dba-maven-plugin/tree/feature-NAB-356/en))  
 This tool automates DBA routine work so that programmers can concentrating on the main data modeling work.  
 
 
 ### Tools managed in GitHub
 
-* Nablarch sql-executor ([nablarch/sql-executor](https://github.com/nablarch/sql-executor))  
- This tool interactively executes SQL files containing Nablarch’s special syntax.    
+* Nablarch sql-executor ([nablarch/sql-executor](https://github.com/nablarch/sql-executor/tree/feature-NAB-356/en))  
+ This tool interactively executes SQL files containing Nablarch's special syntax.    
 [Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/SqlExecutor/SqlExecutor.html)
   
-* Business screen JSP verification tool ([nablarch/nablarch-toolbox](https://github.com/nablarch/nablarch-toolbox))  
+* Business screen JSP verification tool ([nablarch/nablarch-toolbox](https://github.com/nablarch/nablarch-toolbox/tree/feature-NAB-356/en))  
 This tool verifies business screen JSP.    
 [Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/JspVerifier/JspVerifier.html)
 
