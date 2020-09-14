@@ -4,7 +4,7 @@
 
 > 外部インタフェース設計書の詳細な仕様は「外部インタフェース設計書」を参照してください。
 > 
-> フォーマット定義ファイルの詳細な仕様は[「アーキテクチャ解説書」](https://nablarch.github.io/docs/LATEST/doc/application_framework/application_framework/libraries/data_io/data_format/format_definition.html)を参照。
+> フォーマット定義ファイルの詳細な仕様は[「汎用データフォーマット」の「フォーマット定義ファイルの記述ルール」](https://nablarch.github.io/docs/LATEST/doc/application_framework/application_framework/libraries/data_io/data_format/format_definition.html)を参照。
 
 使用方法
 ----
