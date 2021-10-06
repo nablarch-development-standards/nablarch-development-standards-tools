@@ -2,12 +2,14 @@
 
 All significant changes to this project will be documented in this file.
 
-## [2.1] - 2021-10-31
+## [1.1] - 2021-10-31
 ### Updates
 #### Change
-- The automatic format definition file generation tool has been modified to support design document changes. (The design document is Japanese version only.)
+- The automatic format definition file generation tool has been modified to support design document following changes. (The design document is Japanese version only.)
+  - In the old format, the description rule was to enclose the item ID in [ ] to indicate the hierarchical structure of the object, which was difficult to understand because it was expressed flatly in a single table. In the new format, the table is divided by hierarchy to make it easier to understand at a glance.
+  - Since there was no place for the number of digits in the record definition, we added a column for the number of digits.
 
-## [2.0] - 2020-08-14
+## [1.0-en] - 2020-08-14
 ### Updates
 #### Add
 - English version is now available
