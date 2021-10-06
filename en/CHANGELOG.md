@@ -13,7 +13,7 @@ All significant changes to this project will be documented in this file.
 ### Updates
 #### Add
 - English version is now available
-  - The content is the same as the Japanese version 1.1. Only some of the content is available to the public.
+  - The content is the same as the Japanese version 1.0. Only some of the content is available to the public.
 
 
 ## [1.0] - 2018-10-09
