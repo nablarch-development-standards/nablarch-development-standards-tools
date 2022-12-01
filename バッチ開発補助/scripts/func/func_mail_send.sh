@@ -24,16 +24,16 @@
 ####################################################################################
 
 ### シェルスクリプト共通設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/common.sh
+. "${COMMON_CONF_DIR}"/common.sh
 
 ### ディレクトリ情報読み込み ###
-. ${COMMON_CONF_DIR}/batch_dir.config
+. "${COMMON_CONF_DIR}"/batch_dir.config
 
 ### JAVA実行情報読み込み ###
-. ${COMMON_CONF_DIR}/java_env.config
+. "${COMMON_CONF_DIR}"/java_env.config
 
 ### JAVA実行共通関数読み込み ###
-. ${COMMON_DIR}/func/conf/func_java_common.sh
+. "${COMMON_DIR}"/func/conf/func_java_common.sh
 
 ####################################################################################
 # スクリプト本文
@@ -54,15 +54,15 @@ shift
 MNT_REQ_ID="-Dmonitor-request-id=${JOB_ID}"
 
 ### 多重起動チェック
-DUPLICATE_PROCESS_CHECK ${JOB_ID}
+DUPLICATE_PROCESS_CHECK "${JOB_ID}"
 
 ### プロセス毎にコピーする必要があるJARをジョブ管理システム配下にコピーする。 ###
 RUN_LIB_OUT_DIR=${RUN_LIB_OUT}/${JOB_ID}
-DELETE_DIR ${RUN_LIB_OUT_DIR}
-COPY_RUN_JARS ${RUN_LIB_OUT_DIR}
+DELETE_DIR "${RUN_LIB_OUT_DIR}"
+COPY_RUN_JARS "${RUN_LIB_OUT_DIR}"
 
 ### クラスパスを設定する変数 ###
-SET_RUNTIME_CLASSPATH ${RUN_LIB_OUT_DIR}
+SET_RUNTIME_CLASSPATH "${RUN_LIB_OUT_DIR}"
 
 ### 実行オプションの生成 ###
 NAB_OPT="-classpath ${RUNTIME_CLASSPATH} ${MAIL_OPT} ${INP_NAB_OPT} "
@@ -81,7 +81,7 @@ MAIN_ARGS="${MAIN_ARGS} -requestPath ${REQ_PATH}"
 MAIN_ARGS="${MAIN_ARGS} -userId ${USER_ID}"
 
 ### バッチ実行 ###
-eval ${JAVA_HOME_PATH}/bin/java ${MNT_REQ_ID} ${NAB_OPT} ${MAIN} ${MAIN_ARGS} "$@" &
+eval "${JAVA_HOME_PATH}"/bin/java "${MNT_REQ_ID}" "${NAB_OPT}" "${MAIN}" "${MAIN_ARGS}" "$*" &
 
 ### 処理終了ログの出力 ###
 EXIT_CODE=${?}

@@ -25,21 +25,15 @@ SET_RUNTIME_CLASSPATH () {
     RUN_LIB_OUT_DIR=${1}
 
     ### ジョブ単位でコピーされるJAR対応
-    for JAR_RUN_LIB in `ls ${RUN_LIB_OUT_DIR}`; do
+    for JAR_RUN_LIB in "${RUN_LIB_OUT_DIR}"/*; do
         RUNTIME_CLASSPATH="${RUN_LIB_OUT_DIR}/${JAR_RUN_LIB}:${RUNTIME_CLASSPATH}"
     done
 
-    for JAR_LIB in `echo ${LIB_PATH} | sed -e "s/:/\n/g"`; do
-        if [ `echo ${JAR_LIB} | grep -e "\*$"` ]
-        then
-            JAR_LIB=`sed -e "s/\*$//g"`
-            for FILE in `ls ${JAR_LIB}`; do
-                RUNTIME_CLASSPATH="${RUN_LIB_OUT_DIR}/${FILE}:${RUNTIME_CLASSPATH}"
-            done
-        elif [ `echo ${JAR_LIB} | grep -e "\/$"` ]
+    for JAR_LIB in $(echo "${LIB_PATH}" | sed -e "s/:/\n/g"); do
+        if echo "${JAR_LIB}" | grep -q -e "\/$"
         then
             RUNTIME_CLASSPATH="${JAR_LIB}:${RUNTIME_CLASSPATH}"
-        elif [ `echo ${JAR_LIB} | grep -e "\.jar$"` ]
+        elif echo "${JAR_LIB}" | grep -q -e "\.jar$"
         then
             RUNTIME_CLASSPATH="${JAR_LIB}:${RUNTIME_CLASSPATH}"
         fi
