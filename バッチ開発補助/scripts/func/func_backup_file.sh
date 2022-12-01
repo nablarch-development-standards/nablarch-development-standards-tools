@@ -24,13 +24,13 @@
 ########################################################################
 
 ### シェルスクリプト共通設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/common.sh
+. "${COMMON_CONF_DIR}"/common.sh
 
 ### ディレクトリ情報設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/batch_dir.config
+. "${COMMON_CONF_DIR}"/batch_dir.config
 
 ### 障害メッセージ設定ファイルの読込 ###
-. ${COMMON_DIR}/conf/error.message
+. "${COMMON_DIR}"/conf/error.message
 
 ########################################################################
 # スクリプト本文
@@ -88,12 +88,12 @@ if [ ! -e "${INPUT_FILE_PATH}" ]; then
 fi
 
 ### 送受信ファイルバックアップ
-DATE=`date "+%Y%m%d%H%M%S"`
+DATE=$(date "+%Y%m%d%H%M%S")
 BACKUP_FILE_PATH=${BACKUP_DIR_PATH}/${INPUT_FILE_NAME}_${DATE}
-cp -pf ${INPUT_FILE_PATH} ${BACKUP_FILE_PATH}
+
 
 ### バックアップが失敗した場合
-if [ ${?} -ne 0 ]; then
+if ! cp -pf "${INPUT_FILE_PATH}" "${BACKUP_FILE_PATH}"; then
     LOG_MSG "${ES9999806}"
     LOG_MSG "EXIT_CODE = [114]"
     exit 114

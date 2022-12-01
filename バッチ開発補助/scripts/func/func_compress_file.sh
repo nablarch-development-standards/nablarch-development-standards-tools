@@ -26,13 +26,13 @@
 #################################################################################
 
 ### シェルスクリプト共通設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/common.sh
+. "${COMMON_CONF_DIR}"/common.sh
 
 ### ディレクトリ情報設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/batch_dir.config
+. "${COMMON_CONF_DIR}"/batch_dir.config
 
 ### 障害メッセージ設定ファイルの読込 ###
-. ${COMMON_DIR}/conf/error.message
+. "${COMMON_DIR}"/conf/error.message
 
 #################################################################################
 # スクリプト本文
@@ -91,7 +91,7 @@ if [ ! -d "${COMPRESSION_TARGET_PATH}" ]; then
 fi
 
 ### 圧縮対象ファイル存在精査
-if [ `ls ${COMPRESSION_TARGET_PATH} | wc -l` -le 0 ]; then
+if [ "$(find "${COMPRESSION_TARGET_PATH}" -name '*' -type f | wc -l)" -le 0 ]; then
     LOG_MSG "${ES9999W03}"
     LOG_MSG "PATH = ${COMPRESSION_TARGET_PATH}"
     LOG_MSG "EXIT_CODE = [112]"
@@ -101,12 +101,12 @@ fi
 ### ファイル0バイト精査
 ### 対象ディレクトリに0バイトファイルが存在するかをチェック
 COMPRESSION_FILE_PATH=${COMPRESSION_DIR_PATH}/${COMPRESSION_FILE_NAME}
-for file_path_name in `find ${COMPRESSION_TARGET_PATH} -name "*" -type f`
+while IFS= read -r file_path_name
 do
     if [ ! -s "${file_path_name}" ]; then
         if [ "${SIZE_CHK_KBN}" -eq 0 ]; then
             # 0バイトファイルを許容する場合、指定したファイル名で空ファイルを作成する
-            echo -n > "${COMPRESSION_FILE_PATH}"
+            touch "${COMPRESSION_FILE_PATH}"
             LOG_MSG "COMPRESSION_TARGET_PATH = [${COMPRESSION_TARGET_PATH}]"
             LOG_MSG "COMPRESSION_FILE_PATH = [${COMPRESSION_FILE_PATH}]"
             LOG_MSG "EXIT_CODE = [0]"
@@ -118,15 +118,21 @@ do
             exit 115
         fi
     fi
-done
+done << EOF
+$(find "${COMPRESSION_TARGET_PATH}" -name "*" -type f)
+EOF
+
+### 圧縮対象ファイル配置ディレクトリに移動
+### 圧縮時のファイルパスが絶対パスだと、解凍時に意図しない上書きが発生する可能性があるため、相対パスで指定する
+if ! cd "${COMPRESSION_TARGET_PATH}"; then
+    LOG_MSG "${ES9999W04}"
+    LOG_MSG "EXIT_CODE = [111]"
+    exit 111
+fi
 
 ### 対象ファイルの圧縮
-### 圧縮時のファイルパスが絶対パスだと、解凍時に意図しない上書きが発生する可能性があるため、相対パスで指定する
-cd ${COMPRESSION_TARGET_PATH}
-find . -name "*" -type f -print0 | tar cvzf ${COMPRESSION_FILE_PATH} --null -T -
-
-### 対象ファイルの圧縮に失敗した場合
-if [ ${?} -ne 0 ]; then
+if ! find . -name "*" -type f -print0 | tar cvzf "${COMPRESSION_FILE_PATH}" --null -T -; then
+    ### 対象ファイルの圧縮に失敗した場合
     LOG_MSG "${ES9999W05}"
     LOG_MSG "EXIT_CODE = [113]"
     exit 113

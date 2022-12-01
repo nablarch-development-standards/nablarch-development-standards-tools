@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ####################################################################################
 #  File name    : func_java_common.sh
 #  Description  : Java実行用シェルで共通的に使用する変数・関数を定義する。
@@ -66,21 +68,12 @@ COPY_RUN_JARS () {
 
     RUN_LIB_OUT_DIR=${1}
 
-    mkdir ${RUN_LIB_OUT_DIR} || DIE
-    for RUN_LIB in `echo ${RUN_LIB_PATH} | sed -e "s/:/\n/g"`; do
-        if [ `echo ${LIB} | grep -e "\*$"`]
-        then
-            LIB=`sed -e "s/\*$//g"`
-            for RUN_DIR in `ls ${LIB}`; do
-
-                # 通常は失敗しえないが、ディスク障害などが発生した場合を考慮する。
-                cp -fp ${RUN_DIR}/*.jar ${RUN_LIB_OUT_DIR} || DIE
-
-            done
-        elif [ `echo ${RUN_LIB} | grep -e "\.jar$"` ]
+    mkdir "${RUN_LIB_OUT_DIR}" || DIE
+    for RUN_LIB in $(echo "${RUN_LIB_PATH}" | sed -e "s/:/\n/g"); do
+        if echo "${RUN_LIB}" | grep -q -e "\.jar$"
         then
             # 通常は失敗しえないが、ディスク障害などが発生した場合を考慮する。
-            cp -fp ${RUN_LIB} ${RUN_LIB_OUT_DIR} || DIE
+            cp -fp "${RUN_LIB}" "${RUN_LIB_OUT_DIR}" || DIE
         fi
     done
 }
@@ -94,9 +87,9 @@ DELETE_DIR () {
 
     DELETE_DIR=${1}
 
-    if [ -d ${DELETE_DIR} ]
+    if [ -d "${DELETE_DIR}" ]
     then
-        rm -rf ${DELETE_DIR} || DIE
+        rm -rf "${DELETE_DIR}" || DIE
     fi
 }
 
@@ -109,17 +102,17 @@ DELETE_DIR () {
 ###################################################
 DUPLICATE_PROCESS_CHECK() {
     JOB_ID=${1}
-    # 自身の親プロセスのIDを取得
-    PARENT_PID=`ps -F --pid=$$ | grep $$ | awk '{print $3}'`
-    # JOBIDのプロセス数を取得する。(この時に自身と親のプロセスIDは除外する。)
-    PROCESS_COUNT=`ps -ef | grep ${JOB_ID} | grep -v ${PARENT_PID} | grep -v $$ | grep -v grep | wc -l || DIE`
 
-
-    if [ "${PROCESS_COUNT}" -ne 0 ]
-    then
-        # 既にJOBIDが起動済みの場合は、異常終了する。
-        LOG_MSG "specified JOB_ID is already used by another process."
-        exit 1
-    fi
+    # JOB_IDをコマンドに含むプロセスの中で
+    for pid in $(pgrep -f "${JOB_ID}")
+    do
+        # 自身と親プロセスID以外のモノがあれば起動済みと判定
+        if [ "${pid}" != "$$" ] && [ "${pid}" != "${PPID}" ]
+        then
+            # 既にJOBIDが起動済みの場合は、異常終了する。
+            LOG_MSG "specified JOB_ID is already used by another process."
+            exit 1
+        fi
+    done
 }
 

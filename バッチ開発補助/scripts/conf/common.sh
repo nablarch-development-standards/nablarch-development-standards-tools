@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ####################################################################################
 #  File name    : common.sh
 #  Description  : シェルスクリプトで共通的に使用する変数、関数を定義する。
@@ -28,9 +30,9 @@ CMD=${0##*/}
 ###################################################
 LOG_MSG () {
 
-    DATE_AT_LOGGING=`date "+%Y/%m/%d %H:%M:%S"`
-    RNNODE=`hostname`
-    RNUSER=`whoami`
+    DATE_AT_LOGGING=$(date "+%Y/%m/%d %H:%M:%S")
+    RNNODE=$(hostname)
+    RNUSER=$(whoami)
     MSG_TO_DISP=${1}
     echo "${DATE_AT_LOGGING} ${RNNODE} ${RNUSER} : [ ${CMD} ] ${MSG_TO_DISP}"
 }
@@ -57,7 +59,7 @@ LOG_FOOTER () {
 
     LOG_MSG "Script was Finished"
     echo "###################################################"
-    echo "##  $(date "+ %Y/%m/%d %H:%M:%S")  < ${CMD} > END"
+    echo "##  $(date "+%Y/%m/%d %H:%M:%S")  < ${CMD} > END"
     echo "###################################################"
 }
 
@@ -74,37 +76,37 @@ LOG_FOOTER () {
 RUN_CHILD_SCRIPT () {
 
     ###  ログファイル名を設定する。 ###
-    if [ -z ${LOG_NAME} ]
+    if [ -z "${LOG_NAME}" ]
     then
         LOG_DIR=${JOB_SHELL_DIR}"/auto_sh/JOBLOG"
-        LOG_NAME="${LOG_DIR}/${CMD}-`date +%Y%m%d%H%M%S`.log"
+        LOG_NAME="${LOG_DIR}/${CMD}-$(date +%Y%m%d%H%M%S).log"
     fi
 
-    if ! [ -z ${RUN_MANUAL} ] && [ ${RUN_MANUAL} = "y" ]
+    if [ -n "${RUN_MANUAL}" ] && [ "${RUN_MANUAL}" = "y" ]
     then
         LOG_HEADER
-        eval "$@"
+        eval "$*"
         EXIT_CODE=${?}
         if [ ${EXIT_CODE} -ne 0 ]
         then
-            LOG_MSG "[$@] was failed!"
+            LOG_MSG "[$*] was failed!"
         else
-            LOG_MSG "[$@] was success."
+            LOG_MSG "[$*] was success."
         fi
         LOG_FOOTER
     else
         {
         LOG_HEADER
-        eval "$@"
+        eval "$*"
         EXIT_CODE=${?}
         if [ ${EXIT_CODE} -ne 0 ]
         then
-            LOG_MSG "[$@] was failed!"
+            LOG_MSG "[$*] was failed!"
         else
-            LOG_MSG "[$@] was success."
+            LOG_MSG "[$*] was success."
         fi
         LOG_FOOTER
-        } >> ${LOG_NAME} 2>&1
+        } >> "${LOG_NAME}" 2>&1
     fi
     return ${EXIT_CODE}
 }
@@ -115,10 +117,10 @@ RUN_CHILD_SCRIPT () {
 # USAGE         : CONFIRM_USER_INPUT
 ###################################################
 CONFIRM_USER_INPUT () {
-    if ! [ -z ${RUN_MANUAL} ] && [ ${RUN_MANUAL} = "y" ]
+    if [ -n "${RUN_MANUAL}" ] && [ "${RUN_MANUAL}" = "y" ]
     then
-        cat ${COMMON_DIR}/conf/user_confirm.message
-        read USER_INPUT
+        cat "${COMMON_DIR}"/conf/user_confirm.message
+        read -r USER_INPUT
         if [ "${USER_INPUT}" != "y" ]
         then
             LOG_MSG "Execution if ${CMD} was interrupted"

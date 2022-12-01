@@ -35,13 +35,13 @@
 #################################################################################
 
 ### シェルスクリプト共通設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/common.sh
+. "${COMMON_CONF_DIR}"/common.sh
 
 ### ディレクトリ情報読み込み ###
-. ${COMMON_CONF_DIR}/batch_dir.config
+. "${COMMON_CONF_DIR}"/batch_dir.config
 
 ### 障害メッセージ設定ファイルの読込 ###
-. ${COMMON_DIR}/conf/error.message
+. "${COMMON_DIR}"/conf/error.message
 
 #################################################################################
 # スクリプト本文
@@ -129,17 +129,18 @@ fi
 
 ### 対象ファイルのリネーム・コピー
 if [ "${OVERWRITE_FLG}" -eq 1 ] && [ "${PROC_PATTERN}" -eq 1 ]; then
-    cp -pf ${INPUT_FILE_PATH} ${MOVE_FILE_PATH}
+    cp -pf "${INPUT_FILE_PATH}" "${MOVE_FILE_PATH}"
 elif [ "${OVERWRITE_FLG}" -eq 0 ] && [ "${PROC_PATTERN}" -eq 1 ]; then
-    cp -p ${INPUT_FILE_PATH} ${MOVE_FILE_PATH}
+    cp -p "${INPUT_FILE_PATH}" "${MOVE_FILE_PATH}"
 elif [ "${OVERWRITE_FLG}" -eq 1 ] && [ "${PROC_PATTERN}" -eq 0 ]; then
-    mv -f ${INPUT_FILE_PATH} ${MOVE_FILE_PATH}
+    mv -f "${INPUT_FILE_PATH}" "${MOVE_FILE_PATH}"
 elif [ "${OVERWRITE_FLG}" -eq 0 ] && [ "${PROC_PATTERN}" -eq 0 ]; then
-    mv ${INPUT_FILE_PATH} ${MOVE_FILE_PATH}
+    mv "${INPUT_FILE_PATH}" "${MOVE_FILE_PATH}"
 fi
+RENAME_COPY_STATUS=${?}
 
 ### 対象ファイルのリネーム・コピーに失敗した場合
-if [ ${?} -ne 0 ]; then
+if [ ${RENAME_COPY_STATUS} -ne 0 ]; then
     LOG_MSG "${ES9999509}"
     LOG_MSG "EXIT_CODE = [117]"
     exit 117

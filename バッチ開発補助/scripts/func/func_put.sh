@@ -31,13 +31,13 @@
 ################################################################################################
 
 ### シェルスクリプト共通設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/common.sh
+. "${COMMON_CONF_DIR}"/common.sh
 
 ### ディレクトリ情報設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/batch_dir.config
+. "${COMMON_CONF_DIR}"/batch_dir.config
 
 ### 障害メッセージ設定ファイルの読込 ###
-. ${COMMON_DIR}/conf/error.message
+. "${COMMON_DIR}"/conf/error.message
 
 ################################################################################################
 # スクリプト本文
@@ -64,20 +64,19 @@ fi
 # 引数取得
 TARGET_FILE=${1}
 shift
-eval FROM_DIR=${FILE_TRANCEFER_BASE_DIR}/${1}
+eval FROM_DIR="${FILE_TRANCEFER_BASE_DIR}"/"${1}"
 shift
-eval TO_DIR='$'${1}
+eval TO_DIR='$'"${1}"
 shift
-eval USER_NAME='$'${1}
+eval USER_NAME='$'"${1}"
 shift
-eval SERVER_NAME='$'${1}
+eval SERVER_NAME='$'"${1}"
 shift
 KEY_FILE_NAME=${1}
 shift
 
 ### SFTPコマンドの存在チェック
-which sftp
-if [ ${?} -ne 0 ]; then
+if ! which sftp; then
     LOG_MSG "${ES9999Y09}"
     LOG_MSG "EXIT_CODE = [118]"
     exit 118
@@ -118,8 +117,7 @@ TARGET_END_FILE_PATH=${TARGET_FILE_PATH}.end
 OUTPUT_END_FILE_PATH=${OUTPUT_FILE_PATH}.end
 
 ### 送達確認用ファイルを作成
-echo -n > ${TARGET_END_FILE_PATH}
-if [ ${?} -ne 0 ]; then
+if ! touch "${TARGET_END_FILE_PATH}"; then
     LOG_MSG "${ES9999Y06}"
     LOG_MSG "PATH = ${TARGET_END_FILE_PATH}"
     LOG_MSG "EXIT_CODE = [115]"
@@ -128,19 +126,21 @@ fi
 
 ### 送信処理用バッチ作成
 ### パスを動的に変更するため、本処理内でバッチを作成する
-DATE=`date "+%Y%m%d%H%M%S"`
+DATE=$(date "+%Y%m%d%H%M%S")
 SFTP_BATCH_FILE_PATH="${COMMON_DIR}/func/sftp/"sftp_batch_${DATE}.sh
-echo "#!/bin/sh" > ${SFTP_BATCH_FILE_PATH}
-echo put ${TARGET_FILE_PATH} ${OUTPUT_FILE_PATH} >> ${SFTP_BATCH_FILE_PATH}
-echo put ${TARGET_END_FILE_PATH} ${OUTPUT_END_FILE_PATH} >> ${SFTP_BATCH_FILE_PATH}
-echo quit >> ${SFTP_BATCH_FILE_PATH}
+{
+    echo "#!/bin/sh"
+    echo put "${TARGET_FILE_PATH}" "${OUTPUT_FILE_PATH}"
+    echo put "${TARGET_END_FILE_PATH}" "${OUTPUT_END_FILE_PATH}"
+    echo quit
+} > "${SFTP_BATCH_FILE_PATH}"
 
 ### SFTPの実行
-sftp -b ${SFTP_BATCH_FILE_PATH} -oIdentityFile=${KEY_FILE_PATH} ${HOST_NAME}
+sftp -b "${SFTP_BATCH_FILE_PATH}" -oIdentityFile="${KEY_FILE_PATH}" "${HOST_NAME}"
 SFTP_EXIT_CODE=${?}
 
 ### バッチファイル削除
-rm ${SFTP_BATCH_FILE_PATH}
+rm "${SFTP_BATCH_FILE_PATH}"
 
 ### ファイル授受に失敗した場合
 if [ ${SFTP_EXIT_CODE} -ne 0 ]; then

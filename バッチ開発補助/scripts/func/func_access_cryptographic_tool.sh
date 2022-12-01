@@ -35,13 +35,13 @@
 ################################################################################################
 
 ### シェルスクリプト共通設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/common.sh
+. "${COMMON_CONF_DIR}"/common.sh
 
 ### ディレクトリ情報設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/batch_dir.config
+. "${COMMON_CONF_DIR}"/batch_dir.config
 
 ### 障害メッセージ設定ファイルの読込 ###
-. ${COMMON_DIR}/conf/error.message
+. "${COMMON_DIR}"/conf/error.message
 
 ################################################################################################
 # スクリプト本文
@@ -125,9 +125,8 @@ if [ ! -s "${INPUT_FILE_PATH}" ]; then
     ### 暗号化/復号対象ファイルサイズ0バイト精査
     if [ "${SIZE_CHK_KBN}" -eq 0 ]; then
         ### 暗号化/復号対象ファイルを出力先ディレクトリにコピー
-        cp -f ${INPUT_FILE_PATH} ${OUTPUT_FILE_PATH}
-        ### コピーに失敗した場合
-        if [ "${?}" -ne 0 ]; then
+        if ! cp -f "${INPUT_FILE_PATH}" "${OUTPUT_FILE_PATH}"; then
+            ### コピーに失敗した場合
             LOG_MSG "${ES9999X07}"
             LOG_MSG "from ${INPUT_FILE_PATH} to ${OUTPUT_FILE_PATH}"
             LOG_MSG "EXIT_CODE = [119]"
@@ -153,10 +152,10 @@ else
     fi
 
     ### OpenSSLの実行
-    if [ ${SRI_KBN} -eq "0" ]; then
-      openssl enc -e -aes256 -in ${INPUT_FILE_PATH} -out ${OUTPUT_FILE_PATH} -kfile ${KEY_FILE_PATH}
+    if [ "${SRI_KBN}" -eq "0" ]; then
+      openssl enc -e -aes256 -in "${INPUT_FILE_PATH}" -out "${OUTPUT_FILE_PATH}" -kfile "${KEY_FILE_PATH}"
     else
-      openssl enc -d -aes256 -in ${INPUT_FILE_PATH} -out ${OUTPUT_FILE_PATH} -kfile ${KEY_FILE_PATH}
+      openssl enc -d -aes256 -in "${INPUT_FILE_PATH}" -out "${OUTPUT_FILE_PATH}" -kfile "${KEY_FILE_PATH}"
     fi
     OPENSSL_EXIT_CODE=${?}
     LOG_MSG "OPENSSL_EXIT_CODE = [${OPENSSL_EXIT_CODE}]"

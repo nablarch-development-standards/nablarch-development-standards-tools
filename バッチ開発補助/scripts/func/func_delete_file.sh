@@ -19,13 +19,13 @@
 ##########################################################################
 
 ### シェルスクリプト共通設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/common.sh
+. "${COMMON_CONF_DIR}"/common.sh
 
 ### ディレクトリ情報設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/batch_dir.config
+. "${COMMON_CONF_DIR}"/batch_dir.config
 
 ### 障害メッセージ設定ファイルの読込 ###
-. ${COMMON_DIR}/conf/error.message
+. "${COMMON_DIR}"/conf/error.message
 
 ##########################################################################
 # スクリプト本文
@@ -74,10 +74,8 @@ if [ ! -e "${DELETE_FILE_PATH}" ]; then
 fi
 
 ### ファイル削除
-rm -f ${DELETE_FILE_PATH}
-
-### 対象ファイル削除に失敗した場合
-if [ ${?} -ne 0 ]; then
+if ! rm -f "${DELETE_FILE_PATH}"; then
+    ### 対象ファイル削除に失敗した場合
     LOG_MSG "${ES9999905}"
     LOG_MSG "EXIT_CODE = [113]"
     exit 113

@@ -24,13 +24,13 @@
 #################################################################################
 
 ### シェルスクリプト共通設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/common.sh
+. "${COMMON_CONF_DIR}"/common.sh
 
 ### ディレクトリ情報設定ファイルの読込 ###
-. ${COMMON_CONF_DIR}/batch_dir.config
+. "${COMMON_CONF_DIR}"/batch_dir.config
 
 ### 障害メッセージ設定ファイルの読込 ###
-. ${COMMON_DIR}/conf/error.message
+. "${COMMON_DIR}"/conf/error.message
 
 #################################################################################
 # スクリプト本文
@@ -99,7 +99,7 @@ if [ -e "${EXTRACTION_FILE_PATH}" ]; then
     fi
     
     ### ファイル名が重複するのを避けるため、解凍前一時ファイル名にリネーム
-    mv -f ${EXTRACTION_FILE_PATH} ${EXTRACTION_FILE_RENAME_PATH}
+    mv -f "${EXTRACTION_FILE_PATH}" "${EXTRACTION_FILE_RENAME_PATH}"
 
 ### 解凍前ファイルと解凍前一時ファイル両方が無い場合
 elif [ ! -e "${EXTRACTION_FILE_RENAME_PATH}" ]; then
@@ -111,10 +111,8 @@ elif [ ! -e "${EXTRACTION_FILE_RENAME_PATH}" ]; then
 fi
 
 ### 対象ファイルの解凍
-tar zxvf ${EXTRACTION_FILE_RENAME_PATH} -C ${EXTRACTION_DIR_PATH}
-
-### 対象ファイルの解凍に失敗した場合
-if [ ${?} -ne 0 ]; then
+if ! tar zxvf "${EXTRACTION_FILE_RENAME_PATH}" -C "${EXTRACTION_DIR_PATH}"; then
+    ### 対象ファイルの解凍に失敗した場合
     LOG_MSG "${ES9999V05}"
     LOG_MSG "EXIT_CODE = [113]"
     exit 113
