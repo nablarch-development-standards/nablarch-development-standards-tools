@@ -26,7 +26,7 @@ SET_RUNTIME_CLASSPATH () {
 
     ### ジョブ単位でコピーされるJAR対応
     for JAR_RUN_LIB in "${RUN_LIB_OUT_DIR}"/*; do
-        RUNTIME_CLASSPATH="${RUN_LIB_OUT_DIR}/${JAR_RUN_LIB}:${RUNTIME_CLASSPATH}"
+        RUNTIME_CLASSPATH="${JAR_RUN_LIB}:${RUNTIME_CLASSPATH}"
     done
 
     for JAR_LIB in $(echo "${LIB_PATH}" | sed -e "s/:/\n/g"); do
