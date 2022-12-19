@@ -87,7 +87,7 @@ if [ ! -d "${TO_DIR}" ]; then
     LOG_MSG "${ES9999Z04}"
     LOG_MSG "PATH = ${TO_DIR}"
     LOG_MSG "EXIT_CODE = [113]"
-    exit 112
+    exit 113
 fi
 
 ### キーファイルの存在チェック
