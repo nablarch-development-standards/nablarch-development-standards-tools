@@ -57,7 +57,7 @@ Automatically generates domain setting Java class files based on the domain defi
 
 ### Tools managed in the Maven repository
 
-* JSP static analysis tool (Bundled with [Nablarch Testing](https://mvnrepository.com/artifact/com.nablarch.framework/nablarch-testing))  
+* Jakarta Server Pages static analysis tool (Bundled with [Nablarch Testing](https://mvnrepository.com/artifact/com.nablarch.framework/nablarch-testing))  
 [Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/JspStaticAnalysis/index.html)
   
 
@@ -71,10 +71,6 @@ This tool automates DBA routine work so that programmers can concentrating on th
  This tool interactively executes SQL files containing Nablarch's special syntax.    
 [Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/SqlExecutor/SqlExecutor.html)
   
-* Business screen JSP verification tool ([nablarch/nablarch-toolbox](https://github.com/nablarch/nablarch-toolbox/tree/master/en))  
-This tool verifies business screen JSP.    
-[Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/JspVerifier/JspVerifier.html)
-
 
 
 ## Licensing
