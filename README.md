@@ -69,7 +69,7 @@ Nablarch開発プロセスを支援するツール群です。
 
 ### Mavenリポジトリで管理しているもの
 
-* JSP静的解析ツール
+* Jakarta Server Pages静的解析ツール
 
     [Nablarch Testing](https://mvnrepository.com/artifact/com.nablarch.framework/nablarch-testing)に同梱
     
@@ -90,14 +90,6 @@ Nablarch開発プロセスを支援するツール群です。
     
     [ツールのガイド](https://nablarch.github.io/docs/LATEST/doc/development_tools/toolbox/SqlExecutor/SqlExecutor.html)
   
-* 業務画面JSP検証ツール
-
-    業務画面JSPの検証を行うツールです。
-    [nablarch/nablarch-toolbox](https://github.com/nablarch/nablarch-toolbox)
-    
-    [ツールのガイド](https://nablarch.github.io/docs/LATEST/doc/development_tools/toolbox/JspVerifier/JspVerifier.html)
-
-
 
 ## ライセンス
 この作品は、Apache License 2.0 で提供されます。
