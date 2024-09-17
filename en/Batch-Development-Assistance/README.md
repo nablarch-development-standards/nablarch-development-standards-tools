@@ -1,7 +1,7 @@
 Summary
 -------
 
-This tool has been developed in accordance with the standards described in the "[Shell_Script_Development_Standard.xlsx](https://github.com/nablarch-development-standards/nablarch-style-guide/en/shell/Shell_Script_Development_Standard.xlsx)".  
+This tool has been developed in accordance with the standards described in the "[Shell_Script_Development_Standard.xlsx](https://github.com/Fintan-contents/coding-standards/blob/main/en/shell/Shell_Script_Development_Standard.xlsx)".  
 Please use this tool with the understanding of the "Shell_Script_Development_Standard.xlsx".
 
 This tool automatically generates a settings file containing shell script and environment dependency values for operation of the shell. 
