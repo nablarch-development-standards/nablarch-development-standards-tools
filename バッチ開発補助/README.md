@@ -1,7 +1,7 @@
 概要
 ----
 
-本ツールは、[シェルスクリプト開発標準.xlsx](https://github.com/nablarch-development-standards/nablarch-style-guide/blob/master/shell/シェルスクリプト開発標準.xlsx)に従って開発したツールです。  
+本ツールは、[シェルスクリプト開発標準.xlsx](https://github.com/Fintan-contents/coding-standards/blob/main/shell/シェルスクリプト開発標準.xlsx)に従って開発したツールです。  
 シェルスクリプト開発標準.xlsxを理解した上で使用してください。
 
 下記のファイルからShellスクリプト及びShell実行用の環境依存値を持つ設定ファイルを自動生成します。
