@@ -61,13 +61,13 @@ Automatically generates domain setting Java class files based on the domain defi
 [Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/JspStaticAnalysis/index.html)
   
 
-* gsp-dba-maven-plugin ([coastland/gsp-dba-maven-plugin](https://github.com/coastland/gsp-dba-maven-plugin/tree/master/en))  
+* gsp-dba-maven-plugin ([coastland/gsp-dba-maven-plugin](https://github.com/coastland/gsp-dba-maven-plugin/tree/main/en))  
 This tool automates DBA routine work so that programmers can concentrating on the main data modeling work.  
 
 
 ### Tools managed in GitHub
 
-* Nablarch sql-executor ([nablarch/sql-executor](https://github.com/nablarch/sql-executor/tree/master/en))  
+* Nablarch sql-executor ([nablarch/sql-executor](https://github.com/nablarch/sql-executor/tree/main/en))  
  This tool interactively executes SQL files containing Nablarch's special syntax.    
 [Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/SqlExecutor/SqlExecutor.html)
   
