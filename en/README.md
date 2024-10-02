@@ -57,24 +57,20 @@ Automatically generates domain setting Java class files based on the domain defi
 
 ### Tools managed in the Maven repository
 
-* JSP static analysis tool (Bundled with [Nablarch Testing](https://mvnrepository.com/artifact/com.nablarch.framework/nablarch-testing))  
+* Jakarta Server Pages static analysis tool (Bundled with [Nablarch Testing](https://mvnrepository.com/artifact/com.nablarch.framework/nablarch-testing))  
 [Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/JspStaticAnalysis/index.html)
   
 
-* gsp-dba-maven-plugin ([coastland/gsp-dba-maven-plugin](https://github.com/coastland/gsp-dba-maven-plugin/tree/master/en))  
+* gsp-dba-maven-plugin ([coastland/gsp-dba-maven-plugin](https://github.com/coastland/gsp-dba-maven-plugin/tree/main/en))  
 This tool automates DBA routine work so that programmers can concentrating on the main data modeling work.  
 
 
 ### Tools managed in GitHub
 
-* Nablarch sql-executor ([nablarch/sql-executor](https://github.com/nablarch/sql-executor/tree/master/en))  
+* Nablarch sql-executor ([nablarch/sql-executor](https://github.com/nablarch/sql-executor/tree/main/en))  
  This tool interactively executes SQL files containing Nablarch's special syntax.    
 [Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/SqlExecutor/SqlExecutor.html)
   
-* Business screen JSP verification tool ([nablarch/nablarch-toolbox](https://github.com/nablarch/nablarch-toolbox/tree/master/en))  
-This tool verifies business screen JSP.    
-[Tool guide](https://nablarch.github.io/docs/LATEST/doc/en/development_tools/toolbox/JspVerifier/JspVerifier.html)
-
 
 
 ## Licensing

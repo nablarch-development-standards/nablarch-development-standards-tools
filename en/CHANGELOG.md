@@ -2,6 +2,12 @@
 
 All significant changes to this project will be documented in this file.
 
+## [1.3] - 2024-09-30
+### Updates
+#### Change
+- The description was modified due to the name change of the JSP static analysis tool to the Jakarta Server Pages static analysis tool in the Nablarch 6 series.
+- The description was removed due to the removal of the business screen JSP verification tool in the Nablarch 6 series.
+
 ## [1.2] - 2023-03-31
 ### Updates
 #### Change
