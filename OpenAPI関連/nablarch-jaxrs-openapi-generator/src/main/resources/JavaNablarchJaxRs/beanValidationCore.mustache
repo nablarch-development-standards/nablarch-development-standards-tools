@@ -1,0 +1,49 @@
+{{#pattern}}@Pattern(regexp = "{{{.}}}") {{/pattern}}{{!
+  byte array
+}}{{#isByteArray}}{{!
+     minLength && maxLength set
+}}{{#minLength}}{{#maxLength}}@Size(min = {{minLength}}, max = {{maxLength}}) {{/maxLength}}{{/minLength}}{{!
+     minLength set, maxLength not
+}}{{#minLength}}{{^maxLength}}@Size(min = {{minLength}}) {{/maxLength}}{{/minLength}}{{!
+     minLength not set, maxLength set
+}}{{^minLength}}{{#maxLength}}@Size(max = {{.}}) {{/maxLength}}{{/minLength}}{{!
+}}{{/isByteArray}}{{^isByteArray}}{{!
+  not byte array(string)
+}}{{!
+     minLength && maxLength set
+}}{{#minLength}}{{#maxLength}}@Length(min = {{minLength}}, max = {{maxLength}}) {{/maxLength}}{{/minLength}}{{!
+     minLength set, maxLength not
+}}{{#minLength}}{{^maxLength}}@Length(min = {{minLength}}) {{/maxLength}}{{/minLength}}{{!
+     minLength not set, maxLength set
+}}{{^minLength}}{{#maxLength}}@Length(max = {{.}}) {{/maxLength}}{{/minLength}}{{!
+}}{{/isByteArray}}{{!
+@Size: minItems && maxItems set
+}}{{#minItems}}{{#maxItems}}@Size(min = {{minItems}}, max = {{maxItems}}) {{/maxItems}}{{/minItems}}{{!
+@Size: minItems set, maxItems not
+}}{{#minItems}}{{^maxItems}}@Size(min = {{minItems}}) {{/maxItems}}{{/minItems}}{{!
+@Size: minItems not set && maxItems set
+}}{{^minItems}}{{#maxItems}}@Size(max = {{.}}) {{/maxItems}}{{/minItems}}{{!
+  integer
+}}{{#isInteger}}{{!
+     minimum && maximum set
+}}{{#minimum}}{{#maximum}}@NumberRange(min = {{minimum}}, max = {{maximum}}) {{/maximum}}{{/minimum}}{{!
+     minimum set && maximum not set
+}}{{#minimum}}{{^maximum}}@NumberRange(min = {{minimum}}) {{/maximum}}{{/minimum}}{{!
+     minimum not set && maximum set
+}}{{^minimum}}{{#maximum}}@NumberRange(max = {{maximum}}) {{/maximum}}{{/minimum}}{{/isInteger}}{{!
+  long
+}}{{#isLong}}{{!
+     minimum && maximum set
+}}{{#minimum}}{{#maximum}}@NumberRange(min = {{minimum}}, max = {{maximum}}) {{/maximum}}{{/minimum}}{{!
+     minimum set && maximum not set
+}}{{#minimum}}{{^maximum}}@NumberRange(min = {{minimum}}) {{/maximum}}{{/minimum}}{{!
+     minimum not set && maximum set
+}}{{^minimum}}{{#maximum}}@NumberRange(max = {{maximum}}) {{/maximum}}{{/minimum}}{{/isLong}}{{!
+Not Integer, not Long => we have a decimal value!
+}}{{^isInteger}}{{^isLong}}{{!
+     minimum && maximum set
+}}{{#minimum}}{{#maximum}}@DecimalRange(min = "{{minimum}}", max = "{{maximum}}") {{/maximum}}{{/minimum}}{{!
+     minimum set && maximum not set
+}}{{#minimum}}{{^maximum}}@DecimalRange(min = "{{minimum}}") {{/maximum}}{{/minimum}}{{!
+     minimum not set && maximum set
+}}{{^minimum}}{{#maximum}}@DecimalRange(max = "{{maximum}}") {{/maximum}}{{/minimum}}{{/isLong}}{{/isInteger}}

@@ -1,0 +1,497 @@
+---
+openapi: 3.0.3
+info:
+  title: OpenAPI Sample
+  version: 0.0.1
+servers:
+- url: http://localhost:8080
+  description: OpenAPI Sample description
+paths:
+  /validations:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ValidationResponse'
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidationRequest'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+components:
+  schemas:
+    ValidationRequest:
+      required:
+      - integerRequiredProperty
+      - integerRequiredMinimumMaximumProperty
+      - integerInt32RequiredProperty
+      - integerInt32RequiredMinimumMaximumProperty
+      - integerInt64RequiredProperty
+      - integerInt64RequiredMinimumMaximumProperty
+      - numberRequiredProperty
+      - numberRequiredMinimumMaximumProperty
+      - numberFloatRequiredProperty
+      - numberFloatRequiredMinimumMaximumProperty
+      - numberDoubleRequiredProperty
+      - numberDoubleRequiredMinimumMaximumProperty
+      - booleanRequiredProperty
+      - stringRequiredProperty
+      - stringRequiredMinLengthMaxLengthPatternProperty
+      - stringByteArrayProperty
+      - stringByteArrayRequiredMinLengthMaxLengthProperty
+      - stringDateRequiredProperty
+      - stringDateTimeRequiredProperty
+      - stringPasswordRequiredProperty
+      - stringPasswordRequiredMinLengthMaxLengthPatternProperty
+      - stringNumberRequiredProperty
+      - stringUriRequiredProperty
+      - stringUuidRequiredProperty
+      - stringRegexRequiredMinLengthMaxLengthProperty
+      - stringRegexRequiredProperty
+      - arrayStringRequiredProperty
+      - arrayStringRequiredMinItemsMaxItemsProperty
+      - arrayObjectRequiredProperty
+      - arrayObjectRequiredMinItemsMaxItemsProperty
+      - arrayStringUniqueItemsRequiredProperty
+      - arrayStringUniqueItemsRequiredMinItemsMaxItemsProperty
+      - arrayObjectUniqueItemsRequiredProperty
+      - arrayObjectUniqueItemsRequiredMinItemsMaxItemsProperty
+      - objectRequiredProperty
+      - enumRequiredProperty
+      type: object
+      properties:
+        integerPlainProperty:
+          type: integer
+        integerRequiredProperty:
+          type: integer
+        integerMinimumProperty:
+          minimum: 3
+          type: integer
+        integerMaximumProperty:
+          maximum: 7
+          type: integer
+        integerMinimumMaximumProperty:
+          maximum: 7
+          minimum: 3
+          type: integer
+        integerRequiredMinimumMaximumProperty:
+          maximum: 7
+          minimum: 3
+          type: integer
+        integerInt32PlainProperty:
+          format: int32
+          type: integer
+        integerInt32RequiredProperty:
+          format: int32
+          type: integer
+        integerInt32MinimumProperty:
+          format: int32
+          minimum: 3
+          type: integer
+        integerInt32MaximumProperty:
+          format: int32
+          maximum: 7
+          type: integer
+        integerInt32MinimumMaximumProperty:
+          format: int32
+          maximum: 7
+          minimum: 3
+          type: integer
+        integerInt32RequiredMinimumMaximumProperty:
+          format: int32
+          maximum: 7
+          minimum: 3
+          type: integer
+        integerInt64PlainProperty:
+          format: int64
+          type: integer
+        integerInt64RequiredProperty:
+          format: int64
+          type: integer
+        integerInt64MinimumProperty:
+          format: int64
+          minimum: 3
+          type: integer
+        integerInt64MaximumProperty:
+          format: int64
+          maximum: 7
+          type: integer
+        integerInt64MinimumMaximumProperty:
+          format: int64
+          maximum: 7
+          minimum: 3
+          type: integer
+        integerInt64RequiredMinimumMaximumProperty:
+          format: int64
+          maximum: 7
+          minimum: 3
+          type: integer
+        numberPlainProperty:
+          type: number
+        numberRequiredProperty:
+          type: number
+        numberMinimumProperty:
+          minimum: 3.2
+          type: number
+        numberMaximumProperty:
+          maximum: 7.5
+          type: number
+        numberMinimumMaximumProperty:
+          maximum: 7.5
+          minimum: 3.2
+          type: number
+        numberRequiredMinimumMaximumProperty:
+          maximum: 7.5
+          minimum: 3.2
+          type: number
+        numberFloatPlainProperty:
+          format: float
+          type: number
+        numberFloatRequiredProperty:
+          format: float
+          type: number
+        numberFloatMinimumProperty:
+          format: float
+          minimum: 3.2
+          type: number
+        numberFloatMaximumProperty:
+          format: float
+          maximum: 7.5
+          type: number
+        numberFloatMinimumMaximumProperty:
+          format: float
+          maximum: 7.5
+          minimum: 3.2
+          type: number
+        numberFloatRequiredMinimumMaximumProperty:
+          format: float
+          maximum: 7.5
+          minimum: 3.2
+          type: number
+        numberDoublePlainProperty:
+          format: double
+          type: number
+        numberDoubleRequiredProperty:
+          format: double
+          type: number
+        numberDoubleMinimumProperty:
+          format: double
+          minimum: 3.2
+          type: number
+        numberDoubleMaximumProperty:
+          format: double
+          maximum: 7.5
+          type: number
+        numberDoubleMinimumMaximumProperty:
+          format: double
+          maximum: 7.5
+          minimum: 3.2
+          type: number
+        numberDoubleRequiredMinimumMaximumProperty:
+          format: double
+          maximum: 7.5
+          minimum: 3.2
+          type: number
+        booleanPlainProperty:
+          type: boolean
+        booleanRequiredProperty:
+          type: boolean
+        stringPlainProperty:
+          type: string
+        stringRequiredProperty:
+          type: string
+        stringMinLengthProperty:
+          minLength: 3
+          type: string
+        stringMaxLengthProperty:
+          maxLength: 7
+          type: string
+        stringMinLengthMaxLengthProperty:
+          maxLength: 7
+          minLength: 3
+          type: string
+        stringPatternProperty:
+          pattern: "[a-z]+"
+          type: string
+        stringRequiredMinLengthMaxLengthPatternProperty:
+          maxLength: 7
+          minLength: 3
+          pattern: "[a-z]+"
+          type: string
+        stringByteArrayProperty:
+          format: byte
+          type: string
+        stringByteArrayMinLengthProperty:
+          format: byte
+          minLength: 3
+          type: string
+        stringByteArrayMaxLengthProperty:
+          format: byte
+          maxLength: 7
+          type: string
+        stringByteArrayMinLengthMaxLengthProperty:
+          format: byte
+          maxLength: 7
+          minLength: 3
+          type: string
+        stringByteArrayRequiredMinLengthMaxLengthProperty:
+          format: byte
+          maxLength: 7
+          minLength: 3
+          type: string
+        stringDatePlainProperty:
+          format: date
+          type: string
+          example: 2022-03-10
+        stringDateRequiredProperty:
+          format: date
+          type: string
+          example: 2022-03-10
+        stringDateTimePlainProperty:
+          format: date-time
+          type: string
+          example: 2022-03-10T12:15:50-04:00
+        stringDateTimeRequiredProperty:
+          format: date-time
+          type: string
+          example: 2022-03-10T12:15:50-04:00
+        stringPasswordPlainProperty:
+          type: string
+        stringPasswordRequiredProperty:
+          type: string
+        stringPasswordMinLengthProperty:
+          minLength: 3
+          type: string
+        stringPasswordMaxLengthProperty:
+          maxLength: 7
+          type: string
+        stringPasswordMinLengthMaxLengthProperty:
+          maxLength: 7
+          minLength: 3
+          type: string
+        stringPasswordPatternProperty:
+          pattern: "[a-z]+"
+          type: string
+        stringPasswordRequiredMinLengthMaxLengthPatternProperty:
+          maxLength: 7
+          minLength: 3
+          pattern: "[a-z]+"
+          type: string
+        stringNumberPlainProperty:
+          format: number
+          type: string
+        stringNumberRequiredProperty:
+          format: number
+          type: string
+        stringUriPlainProperty:
+          format: uri
+          type: string
+        stringUriRequiredProperty:
+          format: uri
+          type: string
+        stringUuidPlainProperty:
+          format: uuid
+          type: string
+        stringUuidRequiredProperty:
+          format: uuid
+          type: string
+        stringRegexPlainProperty:
+          format: regex
+          type: string
+        stringRegexRequiredProperty:
+          format: regex
+          type: string
+          pattern: "[a-z]+"
+        stringRegexMinLengthProperty:
+          format: regex
+          type: string
+          pattern: "[a-z]+"
+          minLength: 3
+        stringRegexMaxLengthProperty:
+          format: regex
+          type: string
+          pattern: "[a-z]+"
+          maxLength: 7
+        stringRegexMinLengthMaxLengthProperty:
+          format: regex
+          type: string
+          pattern: "[a-z]+"
+          minLength: 3
+          maxLength: 7
+        stringRegexRequiredMinLengthMaxLengthProperty:
+          format: regex
+          type: string
+          pattern: "[a-z]+"
+          minLength: 3
+          maxLength: 7
+        arrayStringPlainProperty:
+          type: array
+          items:
+            type: string
+        arrayStringRequiredProperty:
+          type: array
+          items:
+            type: string
+        arrayStringMinItemsProperty:
+          minItems: 3
+          type: array
+          items:
+            type: string
+        arrayStringMaxItemsProperty:
+          maxItems: 7
+          type: array
+          items:
+            type: string
+        arrayStringMinItemsMaxItemsProperty:
+          maxItems: 7
+          minItems: 3
+          type: array
+          items:
+            type: string
+        arrayStringRequiredMinItemsMaxItemsProperty:
+          maxItems: 7
+          minItems: 3
+          type: array
+          items:
+            type: string
+        arrayObjectPlainProperty:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayObjectRequiredProperty:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayObjectMinItemsProperty:
+          minItems: 3
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayObjectMaxItemsProperty:
+          maxItems: 7
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayObjectMinItemsMaxItemsProperty:
+          maxItems: 7
+          minItems: 3
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayObjectRequiredMinItemsMaxItemsProperty:
+          maxItems: 7
+          minItems: 3
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayStringUniqueItemsPlainProperty:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        arrayStringUniqueItemsRequiredProperty:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        arrayStringUniqueItemsMinItemsProperty:
+          minItems: 3
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        arrayStringUniqueItemsMaxItemsProperty:
+          maxItems: 7
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        arrayStringUniqueItemsMinItemsMaxItemsProperty:
+          maxItems: 7
+          minItems: 3
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        arrayStringUniqueItemsRequiredMinItemsMaxItemsProperty:
+          maxItems: 7
+          minItems: 3
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        arrayObjectUniqueItemsPlainProperty:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayObjectUniqueItemsRequiredProperty:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayObjectUniqueItemsMinItemsProperty:
+          minItems: 3
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayObjectUniqueItemsMaxItemsProperty:
+          maxItems: 7
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayObjectUniqueItemsMinItemsMaxItemsProperty:
+          maxItems: 7
+          minItems: 3
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        arrayObjectUniqueItemsRequiredMinItemsMaxItemsProperty:
+          maxItems: 7
+          minItems: 3
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationSubRequest'
+        objectPlainProperty:
+          $ref: '#/components/schemas/ValidationSubRequest'
+        objectRequiredProperty:
+          $ref: '#/components/schemas/ValidationSubRequest'
+        enumPlainProperty:
+          type: string
+          enum:
+            - active
+            - inactive
+        enumRequiredProperty:
+          type: string
+          enum:
+            - active
+            - inactive
+    ValidationResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    ValidationSubRequest:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string

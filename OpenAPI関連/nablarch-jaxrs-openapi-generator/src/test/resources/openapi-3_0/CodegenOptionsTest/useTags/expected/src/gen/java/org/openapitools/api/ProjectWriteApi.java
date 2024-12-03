@@ -1,0 +1,64 @@
+package org.openapitools.api;
+
+import nablarch.fw.jaxrs.EntityResponse;
+import org.openapitools.model.ErrorResponse;
+import nablarch.fw.ExecutionContext;
+import nablarch.fw.web.HttpResponse;
+import nablarch.fw.jaxrs.JaxRsHttpRequest;
+import org.openapitools.model.ProjectRequest;
+import org.openapitools.model.ProjectResponse;
+
+import jakarta.ws.rs.*;
+
+@Path("/projects")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:53:43.584981295+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+public interface ProjectWriteApi {
+    /**
+     * POST  : プロジェクトを作成する
+     *
+     * 情報を指定してプロジェクトを作成する
+     *
+     * @param projectRequest プロジェクト登録情報
+     * @param jaxRsHttpRequest HTTPリクエスト
+     * @param context ハンドラ実行コンテキスト
+     * @return project created
+     * @return request invalid
+     */
+    @POST
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    EntityResponse<ProjectResponse> createProject(ProjectRequest projectRequest, JaxRsHttpRequest jaxRsHttpRequest, ExecutionContext context);
+
+    /**
+     * DELETE /{id} : プロジェクトを削除する
+     *
+     * IDを指定してプロジェクトを削除する
+     *
+     * @param jaxRsHttpRequest HTTPリクエスト
+     * @param context ハンドラ実行コンテキスト
+     * @return project deleted
+     * @return not found project
+     */
+    @DELETE
+    @Path("/{id}")
+    HttpResponse deleteProject(JaxRsHttpRequest jaxRsHttpRequest, ExecutionContext context);
+
+    /**
+     * PUT /{id} : プロジェクトを更新する
+     *
+     * IDを指定してプロジェクトを更新する
+     *
+     * @param projectRequest プロジェクト更新情報
+     * @param jaxRsHttpRequest HTTPリクエスト
+     * @param context ハンドラ実行コンテキスト
+     * @return project updated
+     * @return request invalid
+     * @return not found project
+     */
+    @PUT
+    @Path("/{id}")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    HttpResponse updateProject(ProjectRequest projectRequest, JaxRsHttpRequest jaxRsHttpRequest, ExecutionContext context);
+
+}

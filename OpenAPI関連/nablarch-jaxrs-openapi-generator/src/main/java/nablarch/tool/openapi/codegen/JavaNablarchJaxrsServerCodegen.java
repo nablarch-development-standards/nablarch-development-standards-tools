@@ -1,0 +1,362 @@
+package nablarch.tool.openapi.codegen;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.servers.Server;
+import lombok.Getter;
+import lombok.Setter;
+import org.openapitools.codegen.CliOption;
+import org.openapitools.codegen.CodegenConstants;
+import org.openapitools.codegen.CodegenModel;
+import org.openapitools.codegen.CodegenOperation;
+import org.openapitools.codegen.CodegenProperty;
+import org.openapitools.codegen.languages.AbstractJavaCodegen;
+import org.openapitools.codegen.languages.AbstractJavaJAXRSServerCodegen;
+import org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen;
+
+/**
+ * Nablarch JAX-RS用のOpenAPI GeneratorのカスタムGenerator。
+ * <p>
+ * NablarchのRESTful ウェブサービスはJAX-RSのアノテーションを使用しているため、各種JAX-RSのGeneratorの
+ * 抽象実装である{@link AbstractJavaJAXRSServerCodegen}を拡張して実装する。また、生成する対象はActionが
+ * 実装するAPIのインターフェースとモデル、そして無効化できないサポートファイルのみとする。
+ * <p>
+ * Mustacheテンプレートはjaxrs-specのものをカスタマイズして使用する。
+ *
+ * @see <a href="https://github.com/OpenAPITools/openapi-generator/tree/v7.10.0/modules/openapi-generator/src/main/resources/JavaJaxRS/spec">jaxrs-specのMustacheテンプレート</a>
+ */
+public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodegen {
+    /**
+     * Generator前
+     */
+    public static final String GENERATOR_NAME = "nablarch-jaxrs";
+
+    // Generatorのオプション名
+    /**
+     * プリミティブ型のプロパティをすべてString型とする場合のオプション名
+     */
+    static final String PRIMITIVE_PROPERTIES_AS_STRING = "primitivePropertiesAsString";
+
+    /**
+     * サポートするリクエストのメディアタイプのオプション名
+     */
+    static final String SUPPORT_CONSUMES_MEDIA_TYPES = "supportConsumesMediaTypes";
+
+    /**
+     * サポートするレスポンスのメディアタイプのオプション名
+     */
+    static final String SUPPORT_PRODUCES_MEDIA_TYPES = "supportProducesMediaTypes";
+
+    /**
+     * プリミティブ型のプロパティをすべてString型とする場合は{@code true}。
+     */
+    @Getter
+    @Setter
+    private boolean primitivePropertiesAsString = false;
+
+    /**
+     * Generatorがサポートする、リクエストとして受け付けるメディアタイプ。
+     */
+    @Getter
+    @Setter
+    private List<String> supportConsumesMediaTypes = List.of("application/json");
+
+    /**
+     * Generatorがサポートする、レスポンスとして返却するメディアタイプ。
+     */
+    @Getter
+    @Setter
+    private List<String> supportProducesMediaTypes = List.of("application/json");
+
+    /**
+     * 内部変数。
+     * <p>
+     * {@code supportConsumesMediaTypes}に{@code multipart/form-data}が含まれている場合は{@code true}とし、
+     * {@code false}の場合は`type: string`かつ`format: binary`を使用すると例外をスローする。
+     */
+    private boolean supportConsumesMultipart = false;
+
+    /**
+     * Generator名を返却する。
+     *
+     * @return Generator名
+     */
+    public String getName() {
+        return GENERATOR_NAME;
+    }
+
+    /**
+     * ヘルプ（Generatorの簡単な説明）を返却する。
+     *
+     * @return ヘルプ
+     */
+    public String getHelp() {
+        return "Generates a nablarch-jaxrs server library.";
+    }
+
+    /**
+     * コンストラクタ。Generatorのオプションの設定を行う
+     */
+    public JavaNablarchJaxrsServerCodegen() {
+        // set the output folder here
+        outputFolder = "generated-code/nablarch-jaxrs";
+        // GeneratorのMustacheテンプレートの配置先
+        templateDir = "JavaNablarchJaxRs";
+
+        // デフォルトでBean Validation用のアノテーションは生成しない
+        setUseBeanValidation(false);
+
+        // 継承したクラスから、サポートしないオプションを削除
+        removeOption("groupId");
+        removeOption("artifactId");
+        removeOption("artifactVersion");
+        removeOption("artifactUrl");
+        removeOption("artifactDescription");
+        removeOption("scmConnection");
+        removeOption("scmDeveloperConnection");
+        removeOption("scmUrl");
+        removeOption("developerName");
+        removeOption("developerEmail");
+        removeOption("developerOrganization");
+        removeOption("developerOrganizationUrl");
+        removeOption("licenseName");
+        removeOption("licenseUrl");
+        removeOption(AbstractJavaCodegen.ADDITIONAL_ONE_OF_TYPE_ANNOTATIONS);
+        removeOption(AbstractJavaCodegen.IMPLICIT_HEADERS);
+        removeOption(AbstractJavaCodegen.IMPLICIT_HEADERS_REGEX);
+        removeOption(AbstractJavaCodegen.OPENAPI_NULLABLE);
+        removeOption(CodegenConstants.PARENT_GROUP_ID);
+        removeOption(CodegenConstants.PARENT_ARTIFACT_ID);
+        removeOption(CodegenConstants.PARENT_VERSION);
+        removeOption(CodegenConstants.SNAPSHOT_VERSION);
+        removeOption(CodegenConstants.LIBRARY);
+        removeOption(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG);
+        removeOption(AbstractJavaJAXRSServerCodegen.SERVER_PORT);
+        removeOption(JavaJAXRSSpecServerCodegen.GENERATE_POM);
+        removeOption(JavaJAXRSSpecServerCodegen.RETURN_RESPONSE);
+        removeOption(JavaJAXRSSpecServerCodegen.USE_SWAGGER_ANNOTATIONS);
+        removeOption(JavaJAXRSSpecServerCodegen.USE_MICROPROFILE_OPENAPI_ANNOTATIONS);
+        removeOption(AbstractJavaCodegen.SUPPORT_ASYNC);
+        removeOption(JavaJAXRSSpecServerCodegen.USE_MUTINY);
+        removeOption(AbstractJavaCodegen.DISABLE_HTML_ESCAPING);
+        removeOption(AbstractJavaCodegen.USE_JAKARTA_EE);
+
+        // オプションのデフォルト値を調整
+        // インターフェースのみの生成とする
+        updateOption(JavaJAXRSSpecServerCodegen.INTERFACE_ONLY, "true");
+        // 生成するコードにSwagger Coreのアノテーションを付与しない
+        updateOption(JavaJAXRSSpecServerCodegen.USE_SWAGGER_ANNOTATIONS, "false");
+
+        // サポート対象外にしたオプションの値を指定
+        setOpenApiNullable(false);
+        setUseJakartaEe(true); // Jakarta EEのみサポート（Java EEはサポートしない）
+        setDateLibrary("java8");  // 日付型はJava 8のDate and Time APIのものを使う
+
+        // 固有のオプションを追加
+        cliOptions.add(CliOption.newBoolean(PRIMITIVE_PROPERTIES_AS_STRING, "Generate all primitive types such as Integer, Long, and Boolean as String types. (default: false)"));
+        cliOptions.add(CliOption.newString(SUPPORT_CONSUMES_MEDIA_TYPES, "Supported consumes media types. List separated by comma(,) or new line (Linux or Windows) (default: application/json)"));
+        cliOptions.add(CliOption.newString(SUPPORT_PRODUCES_MEDIA_TYPES, "Supported produces media types. List separated by comma(,) or new line (Linux or Windows) (default: application/json)"));
+    }
+
+    /**
+     * Generatorに指定されたオプションの処理を行う。
+     */
+    @Override
+    public void processOpts() {
+        super.processOpts();
+
+        convertPropertyToBooleanAndWriteBack(PRIMITIVE_PROPERTIES_AS_STRING, this::setPrimitivePropertiesAsString);
+        convertPropertyToTypeAndWriteBack(
+                SUPPORT_CONSUMES_MEDIA_TYPES,
+                mediaTypes -> Arrays.asList(mediaTypes.trim().split("\\s*(,|\\r?\\n)\\s*")),
+                this::setSupportConsumesMediaTypes
+        );
+        convertPropertyToTypeAndWriteBack(
+                SUPPORT_PRODUCES_MEDIA_TYPES,
+                mediaTypes -> Arrays.asList(mediaTypes.trim().split("\\s*(,|\\r?\\n)\\s*")),
+                this::setSupportProducesMediaTypes
+        );
+
+        // リクエストのみマルチパートが独自実装される可能性を考慮
+        for (String mediaType : supportConsumesMediaTypes) {
+            if ("multipart/form-data".equalsIgnoreCase(mediaType)) {
+                supportConsumesMultipart = true;
+                break;
+            }
+        }
+
+        // Generatorで生成しないファイルはクリア
+        apiTestTemplateFiles.clear();
+        modelTestTemplateFiles.clear();
+        apiDocTemplateFiles.clear();
+        modelDocTemplateFiles.clear();
+        supportingFiles.clear();
+
+        // import文を追加するための変換表
+        importMapping.put("ExecutionContext", "nablarch.fw.ExecutionContext");
+        importMapping.put("EntityResponse", "nablarch.fw.jaxrs.EntityResponse");
+        importMapping.put("JaxRsHttpRequest", "nablarch.fw.jaxrs.JaxRsHttpRequest");
+        importMapping.put("HttpResponse", "nablarch.fw.web.HttpResponse");
+        importMapping.put("Required", "nablarch.core.validation.ee.Required");
+        importMapping.put("Size", "nablarch.core.validation.ee.Size");
+        importMapping.put("Length", "nablarch.core.validation.ee.Length");
+        importMapping.put("NumberRange", "nablarch.core.validation.ee.NumberRange");
+        importMapping.put("DecimalRange", "nablarch.core.validation.ee.DecimalRange");
+        importMapping.put("Valid", "jakarta.validation.Valid");
+        importMapping.put("Pattern", "jakarta.validation.constraints.Pattern");
+        importMapping.put("Serializable", "java.io.Serializable");
+
+        // Bean Validationのimport文はMustacheテンプレートで制御する
+
+        // プリミティブをすべてStringとして扱う場合
+        if (primitivePropertiesAsString) {
+            typeMapping.put("boolean", "String");
+            typeMapping.put("string", "String");
+            typeMapping.put("int", "String");
+            typeMapping.put("float", "String");
+            typeMapping.put("double", "String");
+            typeMapping.put("number", "String");
+            typeMapping.put("decimal", "String");
+            typeMapping.put("date", "String");
+            typeMapping.put("DateTime", "String");
+            typeMapping.put("long", "String");
+            typeMapping.put("short", "String");
+            typeMapping.put("integer", "String");
+            typeMapping.put("UnsignedInteger", "String");
+            typeMapping.put("UnsignedLong", "String");
+            typeMapping.put("char", "String");
+            typeMapping.put("ByteArray", "String");
+            typeMapping.put("binary", "String");
+            typeMapping.put("file", "String");
+            typeMapping.put("UUID", "String");
+            typeMapping.put("URI", "String");
+            // array、set、map、objectは対象外
+        }
+    }
+
+    /**
+     * オペレーション（エンドポイントに対応するメソッド）の定義からコード生成用のオペレーションを生成する
+     *
+     * @param path       オペレーションのパス
+     * @param httpMethod オペレーションのHTTPメソッド
+     * @param operation  処理対象のオペレーションの定義
+     * @param servers    サーバ
+     * @return コード生成用のオペレーション
+     */
+    @Override
+    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+        // 継承元から、コード生成用のオペレーションを生成
+        CodegenOperation op = super.fromOperation(path, httpMethod, operation, servers);
+
+        if (op.hasConsumes) {
+            List<Map<String, String>> consumes = op.consumes;
+            for (Map<String, String> consume : consumes) {
+                String mediaType = consume.get("mediaType");
+
+                boolean supported = false;
+
+                for (String supportMediaType : supportConsumesMediaTypes) {
+                    if (supportMediaType.equalsIgnoreCase(mediaType)) {
+                        supported = true;
+                        break;
+                    }
+                }
+
+                if (!supported) {
+                    throw new UnsupportedOperationException("Unsupported consumes media type: " + mediaType);
+                }
+            }
+        }
+
+        if (op.hasProduces) {
+            List<Map<String, String>> produces = op.produces;
+            for (Map<String, String> consume : produces) {
+                String mediaType = consume.get("mediaType");
+
+                boolean supported = false;
+
+                for (String supportMediaType : supportProducesMediaTypes) {
+                    if (supportMediaType.equalsIgnoreCase(mediaType)) {
+                        supported = true;
+                        break;
+                    }
+                }
+
+                if (!supported) {
+                    throw new UnsupportedOperationException("Unsupported produces media type: " + mediaType);
+                }
+            }
+        }
+
+        // オペレーション（API）に追加するimport
+        op.imports.add("ExecutionContext");
+        op.imports.add("EntityResponse");
+        op.imports.add("JaxRsHttpRequest");
+        op.imports.add("HttpResponse");
+
+        if (isUseBeanValidation()) {
+            // Bean Validationが有効な場合、Apiのimport文に@Validを追加
+            op.imports.add("Valid");
+        }
+
+        return op;
+    }
+
+    /**
+     * モデルに対する後処理
+     *
+     * @param model    コード生成用のモデル
+     * @param property コード生成用のモデルのプロパティ
+     */
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        super.postProcessModelProperty(model, property);
+
+        if (getSerializableModel()) {
+            model.imports.add("Serializable");
+        }
+
+        if (isUseBeanValidation()) {
+            model.imports.add("Valid");
+            model.imports.add("Pattern");
+            model.imports.add("Required");
+            model.imports.add("Size");
+            model.imports.add("Length");
+            model.imports.add("NumberRange");
+            model.imports.add("DecimalRange");
+        }
+
+        // モデルから不要なimportを削除
+        model.imports.remove("ApiModel");
+        model.imports.remove("ApiModelProperty");
+    }
+
+    /**
+     * モデル定義から、コード生成用のモデルを生成する
+     *
+     * @param name  モデルの名前
+     * @param model モデル定義
+     * @return コード生成用のモデル
+     */
+    @Override
+    public CodegenModel fromModel(String name, Schema model) {
+        CodegenModel codegenModel = super.fromModel(name, model);
+
+        if (!supportConsumesMultipart) {
+            for (CodegenProperty codegenProperty : codegenModel.allVars) {
+                if (codegenProperty.isBinary) {
+                    throw new UnsupportedOperationException("property type: string and format: binary are not supported");
+                }
+            }
+        }
+
+        // モデルから不要なimportを削除
+        codegenModel.imports.remove("ApiModel");
+
+        return codegenModel;
+    }
+}

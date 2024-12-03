@@ -1,0 +1,448 @@
+---
+openapi: 3.0.3
+info:
+  title: OpenAPI API Sample
+  version: 0.0.1
+servers:
+- url: http://localhost:8080
+  description: OpenAPI API Sample description
+tags:
+- name: read
+- name: write
+- name: clientRead
+- name: projectRead
+- name: projectWrite
+- name: userRead
+- name: userWrite
+paths:
+  /projects:
+    get:
+      tags:
+      - read
+      - projectRead
+      summary: すべてのプロジェクトを取得する
+      description: すべてのプロジェクトを取得する。タグとソート順を指定できる
+      operationId: findAllProjects
+      parameters:
+      - name: sortBy
+        in: query
+        description: ソート条件
+        schema:
+          type: string
+      - name: tag
+        in: query
+        description: タグ
+        schema:
+          type: string
+      responses:
+        "200":
+          description: find all projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectResponse'
+    post:
+      tags:
+      - write
+      - projectWrite
+      summary: プロジェクトを作成する
+      description: 情報を指定してプロジェクトを作成する
+      operationId: createProject
+      requestBody:
+        description: プロジェクト登録情報
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+      responses:
+        "200":
+          description: project created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        "400":
+          description: request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /projects/{id}:
+    get:
+      tags:
+      - read
+      - projectRead
+      summary: プロジェクトを取得する
+      description: IDを指定してプロジェクトを取得する
+      operationId: findProjectById
+      parameters:
+      - name: id
+        in: path
+        description: ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: find project by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        "404":
+          description: not found project
+    put:
+      tags:
+      - write
+      - projectWrite
+      summary: プロジェクトを更新する
+      description: IDを指定してプロジェクトを更新する
+      operationId: updateProject
+      parameters:
+      - name: id
+        in: path
+        description: ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: プロジェクト更新情報
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+      responses:
+        "204":
+          description: project updated
+        "400":
+          description: request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: not found project
+    delete:
+      tags:
+      - write
+      - projectWrite
+      summary: プロジェクトを削除する
+      description: IDを指定してプロジェクトを削除する
+      operationId: deleteProject
+      parameters:
+      - name: id
+        in: path
+        description: ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: project deleted
+        "404":
+          description: not found project
+  /projects/{projectId}/clients:
+    get:
+      tags:
+      - read
+      - clientRead
+      summary: プロジェクト内のクライアント一覧取得
+      description: プロジェクト内のクライアント一覧を取得する
+      operationId: findAllClientsInProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: プロジェクト内のクライアント一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+  /users:
+    get:
+      tags:
+      - read
+      - userRead
+      summary: すべてのユーザを取得する
+      description: すべてのユーザを取得する。ソート順を指定できる
+      operationId: findAllUsers
+      parameters:
+      - name: sortBy
+        in: query
+        description: ソート条件
+        schema:
+          type: string
+      responses:
+        "200":
+          description: find all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+    post:
+      tags:
+      - write
+      - userWrite
+      summary: ユーザを作成する
+      description: 情報を指定してユーザを作成する
+      operationId: createUser
+      requestBody:
+        description: ユーザ登録情報
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        "200":
+          description: user created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        "400":
+          description: request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /users/{id}:
+    get:
+      tags:
+      - read
+      - userRead
+      summary: ユーザを取得する
+      description: IDを指定してユーザを取得する
+      operationId: findUserById
+      parameters:
+      - name: id
+        in: path
+        description: ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: find user by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        "404":
+          description: not found user
+    put:
+      tags:
+      - write
+      - userWrite
+      summary: ユーザを更新する
+      description: IDを指定してユーザを更新する
+      operationId: updateUser
+      parameters:
+      - name: id
+        in: path
+        description: ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: ユーザ更新情報
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        "204":
+          description: user updated
+        "400":
+          description: request invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+      - write
+      - userWrite
+      summary: ユーザを削除する
+      description: IDを指定してユーザを削除する
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        description: ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: user deleted
+        "404":
+          description: not found user
+components:
+  schemas:
+    Client:
+      description: クライアント情報
+      type: object
+      properties:
+        id:
+          format: uuid
+          description: クライアントID
+          pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+          type: string
+        name:
+          description: クライアント名
+          type: string
+    ErrorResponse:
+      description: エラーレスポンス
+      type: object
+      properties:
+        message:
+          description: メッセージ
+          type: string
+    ProjectRequest:
+      description: プロジェクト作成・更新情報
+      required:
+      - name
+      - startDate
+      - client
+      type: object
+      properties:
+        name:
+          description: プロジェクト名
+          maxLength: 100
+          minLength: 1
+          type: string
+        sales:
+          format: int64
+          description: 売上
+          minimum: 1
+          type: integer
+        profit:
+          format: int32
+          description: 利益
+          minimum: 1
+          type: integer
+        startDate:
+          format: date
+          description: 開始日
+          type: string
+          example: 2022-03-10
+        endDate:
+          format: date
+          description: 終了日
+          type: string
+          example: 2022-03-10
+        registeredDateTime:
+          format: date-time
+          description: 登録日時
+          type: string
+          example: 2022-03-10T12:15:50-04:00
+        tags:
+          description: タグ
+          maxItems: 5
+          type: array
+          items:
+            type: string
+        client:
+          description: クライアント情報
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Client'
+    ProjectResponse:
+      description: プロジェクト情報
+      type: object
+      properties:
+        id:
+          format: uuid
+          description: プロジェクトID
+          pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+          type: string
+        name:
+          description: プロジェクト名
+          type: string
+        sales:
+          format: int64
+          description: 売上
+          type: integer
+        profit:
+          format: int32
+          description: 利益
+          type: integer
+        startDate:
+          format: date
+          description: 開始日
+          type: string
+          example: 2022-03-10
+        endDate:
+          format: date
+          description: 終了日
+          type: string
+          example: 2022-03-10
+        registeredDateTime:
+          format: date-time
+          description: 登録日時
+          type: string
+          example: 2022-03-10T12:15:50-04:00
+        tags:
+          description: タグ
+          type: array
+          items:
+            type: string
+        client:
+          description: クライアント情報
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Client'
+    UserRequest:
+      description: ユーザ登録・更新情報
+      required:
+      - firstName
+      - lastName
+      type: object
+      properties:
+        firstName:
+          description: 名
+          minLength: 1
+          type: string
+        lastName:
+          description: 姓
+          minLength: 1
+          type: string
+        age:
+          format: int32
+          description: 年齢
+          minimum: 1
+          type: integer
+        birthday:
+          format: date
+          description: 誕生日
+          type: string
+          example: 2022-03-10
+    UserResponse:
+      description: ユーザ情報
+      type: object
+      properties:
+        firstName:
+          description: 名
+          type: string
+        lastName:
+          description: 姓
+          type: string
+        age:
+          format: int32
+          description: 年齢
+          type: integer
+        birthday:
+          format: date
+          description: 誕生日
+          type: string
+          example: 2022-03-10

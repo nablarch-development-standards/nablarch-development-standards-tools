@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+      <groupId>com.nablarch</groupId>
+      <artifactId>nablarch-parent</artifactId>
+      <version>6-NEXT-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.nablarch.tool</groupId>
+    <artifactId>nablarch-jaxrs-openapi-generator</artifactId>
+    <packaging>jar</packaging>
+    <name>nablarch-jaxrs-openapi-generator</name>
+    <version>1.0.0</version>
+
+    <scm>
+      <connection>scm:git:git://github.com/nablarch/${project.artifactId}.git</connection>
+      <developerConnection>scm:git:git://github.com/nablarch/${project.artifactId}.git</developerConnection>
+      <url>https://github.com/nablarch/${project.artifactId}/tree/master</url>
+    </scm>
+
+    <properties>
+        <openapi.generator.version>7.10.0</openapi.generator.version>
+        <javaparser.version>3.24.9</javaparser.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator</artifactId>
+            <version>${openapi.generator.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.nablarch.dev</groupId>
+            <artifactId>nablarch-test-support</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javaparser</groupId>
+            <artifactId>javaparser-core</artifactId>
+            <version>${javaparser.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
