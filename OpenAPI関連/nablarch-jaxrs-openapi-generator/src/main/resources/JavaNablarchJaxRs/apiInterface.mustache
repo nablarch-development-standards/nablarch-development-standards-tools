@@ -14,7 +14,7 @@
      */
     @{{httpMethod}}{{#subresourceOperation}}
     @Path("{{{path}}}"){{/subresourceOperation}}{{#hasConsumes}}
-    @Consumes({ {{#consumes}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/consumes}} }){{/hasConsumes}}{{#hasProduces}}
-    @Produces({ {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}} }){{/hasProduces}}{{#useBeanValidation}}{{#allParams}}{{#isBodyParam}}
+    @Consumes({ {{#consumes}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/consumes}} }){{/hasConsumes}}{{^isResponseBinary}}{{#hasProduces}}
+    @Produces({ {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}} }){{/hasProduces}}{{/isResponseBinary}}{{#useBeanValidation}}{{#allParams}}{{#isBodyParam}}
     @Valid{{/isBodyParam}}{{/allParams}}{{/useBeanValidation}}
-    {{#returnProperty}}EntityResponse<{{{dataType}}}>{{/returnProperty}}{{^returnProperty}}HttpResponse{{/returnProperty}} {{operationId}}({{#allParams}}{{#isBodyParam}}{{{dataType}}} {{paramName}}, {{/isBodyParam}}{{/allParams}}JaxRsHttpRequest jaxRsHttpRequest, ExecutionContext context);
+    {{#returnProperty}}{{#isResponseBinary}}HttpResponse{{/isResponseBinary}}{{^isResponseBinary}}EntityResponse<{{{dataType}}}>{{/isResponseBinary}}{{/returnProperty}}{{^returnProperty}}HttpResponse{{/returnProperty}} {{operationId}}({{#allParams}}{{#isBodyParam}}{{{dataType}}} {{paramName}}, {{/isBodyParam}}{{/allParams}}JaxRsHttpRequest jaxRsHttpRequest, ExecutionContext context);

@@ -318,7 +318,7 @@ public class DataTypeVariationTest extends JavaNablarchJaxrsServerCodegenOpenApi
     }
 
     /**
-     * 明示的にサポートする全データ型、フォーマットの組み合わせの出力結果を確認する
+     * ファイルダウンロード向けのレスポンス定義を処理できることを確認する。
      */
     @Test
     public void supportFileDownload() {
@@ -358,6 +358,22 @@ public class DataTypeVariationTest extends JavaNablarchJaxrsServerCodegenOpenApi
                     generateFile,
                     getExpectedResourceFile(output, generateFile),
                     IGNORE_GENERATED_ANNOTATION_PATTERN
+            );
+        }
+
+        List<File> generatedApiFiles = filterApiFiles(generatedFiles, "src/gen/java/org/openapitools/api");
+
+        for (File generatedApiFile : generatedApiFiles) {
+            GeneratorAssertions.assertContainsPatterns(
+                    generatedApiFile,
+                    // メソッドの戻り値がHttpResponseになっている
+                    "^    HttpResponse"
+            );
+
+            GeneratorAssertions.assertNotContainsPatterns(
+                    generatedApiFile,
+                    // @Producesアノテーションは出力されない
+                    "^    @Produces"
             );
         }
     }

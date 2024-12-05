@@ -265,29 +265,33 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
         }
 
         if (op.hasProduces) {
-            List<Map<String, String>> produces = op.produces;
+            // レスポンスがバイナリの場合は、サポートするメディアタイプのチェックは行わない
+            if (!op.isResponseBinary) {
 
-            List<String> unsupportedMediaTypes = new ArrayList<>();
+                List<Map<String, String>> produces = op.produces;
 
-            for (Map<String, String> consume : produces) {
-                String mediaType = consume.get("mediaType");
+                List<String> unsupportedMediaTypes = new ArrayList<>();
 
-                boolean supported = false;
+                for (Map<String, String> consume : produces) {
+                    String mediaType = consume.get("mediaType");
 
-                for (String supportMediaType : supportProducesMediaTypes) {
-                    if (supportMediaType.equalsIgnoreCase(mediaType)) {
-                        supported = true;
-                        break;
+                    boolean supported = false;
+
+                    for (String supportMediaType : supportProducesMediaTypes) {
+                        if (supportMediaType.equalsIgnoreCase(mediaType)) {
+                            supported = true;
+                            break;
+                        }
+                    }
+
+                    if (!supported) {
+                        unsupportedMediaTypes.add(mediaType);
                     }
                 }
 
-                if (!supported) {
-                    unsupportedMediaTypes.add(mediaType);
+                if (!unsupportedMediaTypes.isEmpty()) {
+                    throw new UnsupportedOperationException("Unsupported produces media types: " + unsupportedMediaTypes);
                 }
-            }
-
-            if (!unsupportedMediaTypes.isEmpty()) {
-                throw new UnsupportedOperationException("Unsupported produces media types: " + unsupportedMediaTypes);
             }
         }
 
