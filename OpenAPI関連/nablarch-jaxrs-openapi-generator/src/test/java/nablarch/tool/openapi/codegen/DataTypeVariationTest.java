@@ -316,4 +316,49 @@ public class DataTypeVariationTest extends JavaNablarchJaxrsServerCodegenOpenApi
             assertEquals("property type: string and format: binary are not supported", e.getCause().getMessage());
         }
     }
+
+    /**
+     * 明示的にサポートする全データ型、フォーマットの組み合わせの出力結果を確認する
+     */
+    @Test
+    public void supportFileDownload() {
+        Map<String, Object> properties = new HashMap<>();
+
+        File output = createGeneratorOutputDirectory();
+
+        CodegenConfigurator configurator = new CodegenConfigurator()
+                .setGeneratorName(GENERATOR_NAME)
+                .setAdditionalProperties(properties)
+                .setInputSpec(getTestClassResourcePath("file_download.yaml"))
+                .setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = configurator.toClientOptInput();
+        DefaultGenerator generator = new DefaultGenerator();
+        List<File> generatedFiles = generator.opts(clientOptInput).generate();
+
+        String[] expectedGenerateFiles = {
+                "src/gen/java/org/openapitools/api/DataTypesApi.java"
+        };
+
+        // 生成されたファイルが存在することを確認
+        GeneratorAssertions.assertExistsFiles(
+                output,
+                generatedFiles,
+                mergeSupportFilesDocumentSpecifiedFiles(expectedGenerateFiles)
+        );
+        // 生成されたJavaソースコードが正しい構文であることを確認
+        GeneratorAssertions.assertValidJavaSourceSyntax(generatedFiles);
+
+        // サポートファイルを除いた生成されたファイルのリストを作成
+        List<File> generatedFilesExcludeSupportFiles = excludeSupportFiles(generatedFiles);
+
+        // 生成されたファイルと期待値を比較して、内容が一致することを確認
+        for (File generateFile : generatedFilesExcludeSupportFiles) {
+            GeneratorAssertions.assertEqualsFileContents(
+                    generateFile,
+                    getExpectedResourceFile(output, generateFile),
+                    IGNORE_GENERATED_ANNOTATION_PATTERN
+            );
+        }
+    }
 }

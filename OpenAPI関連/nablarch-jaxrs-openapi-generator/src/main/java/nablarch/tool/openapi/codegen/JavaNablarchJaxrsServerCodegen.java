@@ -1,5 +1,6 @@
 package nablarch.tool.openapi.codegen;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -238,6 +239,9 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
 
         if (op.hasConsumes) {
             List<Map<String, String>> consumes = op.consumes;
+
+            List<String> unsupportedMediaTypes = new ArrayList<>();
+
             for (Map<String, String> consume : consumes) {
                 String mediaType = consume.get("mediaType");
 
@@ -251,13 +255,20 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
                 }
 
                 if (!supported) {
-                    throw new UnsupportedOperationException("Unsupported consumes media type: " + mediaType);
+                    unsupportedMediaTypes.add(mediaType);
                 }
+            }
+
+            if (!unsupportedMediaTypes.isEmpty()) {
+                throw new UnsupportedOperationException("Unsupported consumes media types: " + unsupportedMediaTypes);
             }
         }
 
         if (op.hasProduces) {
             List<Map<String, String>> produces = op.produces;
+
+            List<String> unsupportedMediaTypes = new ArrayList<>();
+
             for (Map<String, String> consume : produces) {
                 String mediaType = consume.get("mediaType");
 
@@ -271,8 +282,12 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
                 }
 
                 if (!supported) {
-                    throw new UnsupportedOperationException("Unsupported produces media type: " + mediaType);
+                    unsupportedMediaTypes.add(mediaType);
                 }
+            }
+
+            if (!unsupportedMediaTypes.isEmpty()) {
+                throw new UnsupportedOperationException("Unsupported produces media types: " + unsupportedMediaTypes);
             }
         }
 

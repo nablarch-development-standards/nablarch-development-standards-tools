@@ -793,7 +793,7 @@ public class CodegenOptionsTest extends JavaNablarchJaxrsServerCodegenOpenApi30T
             assertTrue(e.getMessage().contains("Could not process operation"));
 
             assertTrue(e.getCause() instanceof UnsupportedOperationException);
-            assertEquals("Unsupported consumes media type: application/xml", e.getCause().getMessage());
+            assertEquals("Unsupported consumes media types: [application/xml]", e.getCause().getMessage());
         }
     }
 
@@ -887,7 +887,7 @@ public class CodegenOptionsTest extends JavaNablarchJaxrsServerCodegenOpenApi30T
             assertTrue(e.getMessage().contains("Could not process operation"));
 
             assertTrue(e.getCause() instanceof UnsupportedOperationException);
-            assertEquals("Unsupported produces media type: application/xml", e.getCause().getMessage());
+            assertEquals("Unsupported produces media types: [application/xml]", e.getCause().getMessage());
         }
     }
 

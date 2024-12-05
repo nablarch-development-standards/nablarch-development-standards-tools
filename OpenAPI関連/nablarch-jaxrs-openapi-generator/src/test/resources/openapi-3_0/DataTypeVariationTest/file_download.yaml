@@ -1,0 +1,19 @@
+---
+openapi: 3.0.3
+info:
+  title: OpenAPI API Sample
+  version: 0.0.1
+servers:
+- url: http://localhost:8080
+  description: OpenAPI API Sample description
+paths:
+  /data-types:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
