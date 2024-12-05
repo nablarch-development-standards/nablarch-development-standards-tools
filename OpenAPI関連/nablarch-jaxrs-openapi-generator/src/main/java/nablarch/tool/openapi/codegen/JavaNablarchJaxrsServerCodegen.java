@@ -63,7 +63,7 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
      */
     @Getter
     @Setter
-    private List<String> supportConsumesMediaTypes = List.of("application/json");
+    private List<String> supportConsumesMediaTypes = List.of("application/json", "multipart/form-data");
 
     /**
      * Generatorがサポートする、レスポンスとして返却するメディアタイプ。
@@ -71,14 +71,6 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
     @Getter
     @Setter
     private List<String> supportProducesMediaTypes = List.of("application/json");
-
-    /**
-     * 内部変数。
-     * <p>
-     * {@code supportConsumesMediaTypes}に{@code multipart/form-data}が含まれている場合は{@code true}とし、
-     * {@code false}の場合は`type: string`かつ`format: binary`を使用すると例外をスローする。
-     */
-    private boolean supportConsumesMultipart = false;
 
     /**
      * Generator名を返却する。
@@ -180,14 +172,6 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
                 mediaTypes -> Arrays.asList(mediaTypes.trim().split("\\s*(,|\\r?\\n)\\s*")),
                 this::setSupportProducesMediaTypes
         );
-
-        // リクエストのみマルチパートが独自実装される可能性を考慮
-        for (String mediaType : supportConsumesMediaTypes) {
-            if ("multipart/form-data".equalsIgnoreCase(mediaType)) {
-                supportConsumesMultipart = true;
-                break;
-            }
-        }
 
         // Generatorで生成しないファイルはクリア
         apiTestTemplateFiles.clear();
@@ -346,11 +330,10 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
     public CodegenModel fromModel(String name, Schema model) {
         CodegenModel codegenModel = super.fromModel(name, model);
 
-        if (!supportConsumesMultipart) {
-            for (CodegenProperty codegenProperty : codegenModel.allVars) {
-                if (codegenProperty.isBinary) {
-                    throw new UnsupportedOperationException("property type: string and format: binary are not supported");
-                }
+        for (CodegenProperty codegenProperty : codegenModel.allVars) {
+            // モデルが生成されるパターン（非マルチパート）では、string型、binaryフォーマットはサポートしない
+            if (codegenProperty.isBinary) {
+                throw new UnsupportedOperationException("property type: string and format: binary are not supported");
             }
         }
 

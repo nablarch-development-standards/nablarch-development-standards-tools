@@ -171,7 +171,8 @@ public class DataTypeVariationTest extends JavaNablarchJaxrsServerCodegenOpenApi
     }
 
     /**
-     * リクエスト内にデータ型が{@code string}、フォーマットが{@code binary}のフィールドを含む場合、生成に失敗することを確認する
+     * メディアタイプがmultipart/form-dataではなく、リクエスト内にデータ型が{@code string}、フォーマットが{@code binary}のフィールドを含む場合、
+     * 生成に失敗することを確認する
      */
     @Test
     public void unsupportedBinaryFormatRequest() {
@@ -231,17 +232,13 @@ public class DataTypeVariationTest extends JavaNablarchJaxrsServerCodegenOpenApi
     }
 
     /**
-     * サポートするリクエストのメディアタイプに明示的に{@code multipart/form-data}を指定した場合、データ型が{@code string}、フォーマットが
-     * {@code binary}のフィールドを指定してもエラーにならないことを確認する。
+     * リクエストでフォーマットが{@code binary}のフィールドを指定してもエラーにならないことを確認する。
      * <p>
-     * モデルは生成されない。
-     * <p>
-     * 利用者でマルチパートを処理するボディコンバータを実装した場合の救済措置。
+     * なお、モデルは生成されない。
      */
     @Test
-    public void enableSupportedMultipartBinaryFormatRequest() {
+    public void includeMultipartBinaryFormatRequest() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("supportConsumesMediaTypes", "application/json,multipart/form-data");
 
         File output = createGeneratorOutputDirectory();
 
@@ -287,15 +284,14 @@ public class DataTypeVariationTest extends JavaNablarchJaxrsServerCodegenOpenApi
     }
 
     /**
-     * サポートするレスポンスのメディアタイプに明示的に{@code multipart/form-data}を指定した場合、データ型が{@code string}、フォーマットに
+     * メディアタイプに明示的に{@code multipart/form-data}を指定した場合、データ型が{@code string}、フォーマットに
      * {@code binary}のフィールドを指定してもエラーになることを確認する。
      * <p>
      * リクエストと異なり、レスポンスでのマルチパートはサポートしない。
      */
     @Test
-    public void enableSupportedMultipartBinaryFormatResponse() {
+    public void unsupportedMultipartWithBinaryFormatResponse() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("supportProducesMediaTypes", "application/json,multipart/form-data");
 
         File output = createGeneratorOutputDirectory();
 
