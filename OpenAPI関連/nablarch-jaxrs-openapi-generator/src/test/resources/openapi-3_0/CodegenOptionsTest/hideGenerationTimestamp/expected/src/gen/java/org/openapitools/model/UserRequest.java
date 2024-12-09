@@ -1,6 +1,7 @@
 package org.openapitools.model;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;

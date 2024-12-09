@@ -1,6 +1,7 @@
 package org.openapitools.model;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * ユーザ情報
  */
 @JsonTypeName("UserResponse")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:59:11.242312066+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:46:06.173255034+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public class UserResponse   {
   private String firstName;
   private String lastName;

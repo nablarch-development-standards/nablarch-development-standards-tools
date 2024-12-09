@@ -1,6 +1,7 @@
 package org.openapitools.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.UUID;
 
 import java.util.Objects;
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * クライアント情報
  */
 @JsonTypeName("Client")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:53:43.254210454+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:46:05.399151358+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public class Client  implements Serializable {
   private UUID id;
   private String name;

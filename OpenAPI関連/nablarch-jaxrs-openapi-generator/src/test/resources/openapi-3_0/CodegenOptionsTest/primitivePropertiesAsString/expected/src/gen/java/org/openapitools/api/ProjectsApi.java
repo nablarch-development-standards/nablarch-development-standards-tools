@@ -13,7 +13,7 @@ import org.openapitools.model.ProjectResponse;
 import jakarta.ws.rs.*;
 
 @Path("/projects")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:53:42.887904164+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:46:04.981051647+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public interface ProjectsApi {
     /**
      * POST  : プロジェクトを作成する

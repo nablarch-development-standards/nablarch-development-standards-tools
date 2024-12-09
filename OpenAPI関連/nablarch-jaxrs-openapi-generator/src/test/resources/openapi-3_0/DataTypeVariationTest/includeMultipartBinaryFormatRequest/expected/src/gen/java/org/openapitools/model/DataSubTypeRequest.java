@@ -1,5 +1,6 @@
 package org.openapitools.model;
 
+import java.util.Arrays;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("DataSubTypeRequest")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-02T14:15:26.062558249+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:43:46.796582783+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public class DataSubTypeRequest   {
   private String id;
   private String name;

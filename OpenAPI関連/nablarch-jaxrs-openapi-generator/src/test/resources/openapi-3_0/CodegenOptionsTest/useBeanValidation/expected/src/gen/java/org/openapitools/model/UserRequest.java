@@ -3,6 +3,7 @@ package org.openapitools.model;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.Arrays;
 import nablarch.core.validation.ee.DecimalRange;
 import nablarch.core.validation.ee.Length;
 import nablarch.core.validation.ee.NumberRange;
@@ -19,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * ユーザ登録・更新情報
  */
 @JsonTypeName("UserRequest")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:59:13.642139079+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:46:07.954889834+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public class UserRequest   {
   private String firstName;
   private String lastName;

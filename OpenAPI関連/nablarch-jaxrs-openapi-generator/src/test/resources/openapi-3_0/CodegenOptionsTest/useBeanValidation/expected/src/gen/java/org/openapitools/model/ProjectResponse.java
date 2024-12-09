@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * プロジェクト情報
  */
 @JsonTypeName("ProjectResponse")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:59:13.642139079+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:46:07.954889834+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public class ProjectResponse   {
   private UUID id;
   private String name;

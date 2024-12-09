@@ -1,5 +1,6 @@
 package org.example.testservice.model;
 
+import java.util.Arrays;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * エラーレスポンス
  */
 @JsonTypeName("ErrorResponse")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:59:11.695907431+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:46:06.613283926+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public class ErrorResponse   {
   private String message;
 

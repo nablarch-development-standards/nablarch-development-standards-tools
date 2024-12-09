@@ -11,7 +11,7 @@ import org.openapitools.model.User;
 import jakarta.ws.rs.*;
 
 @Path("/user")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T21:02:25.087172517+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:42:16.980474344+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public interface UserApi {
     /**
      * POST  : Create user

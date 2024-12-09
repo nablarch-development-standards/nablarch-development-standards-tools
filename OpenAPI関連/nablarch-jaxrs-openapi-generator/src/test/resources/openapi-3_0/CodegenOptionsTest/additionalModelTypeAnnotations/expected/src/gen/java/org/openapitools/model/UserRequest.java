@@ -1,6 +1,7 @@
 package org.openapitools.model;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * ユーザ登録・更新情報
  */
 @JsonTypeName("UserRequest")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:53:42.219339962+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:46:04.420411643+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 @jakarta.enterprise.context.SessionScoped
 @jakarta.enterprise.context.RequestScoped
 public class UserRequest   {

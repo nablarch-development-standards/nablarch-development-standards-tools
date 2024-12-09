@@ -323,6 +323,10 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
             model.imports.add("Serializable");
         }
 
+        if (property.isByteArray) {
+            model.imports.add("Arrays");
+        }
+
         if (isUseBeanValidation()) {
             model.imports.add("Valid");
             model.imports.add("Pattern");
@@ -356,9 +360,13 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
             }
         }
 
+        // 必要なimport文を追加
+        codegenModel.imports.add("Arrays");
+
         // モデルから不要なimportを削除
         codegenModel.imports.remove("ApiModel");
 
         return codegenModel;
     }
+
 }

@@ -2,6 +2,7 @@ package org.openapitools.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * ユーザ登録・更新情報
  */
 @JsonTypeName("UserRequest")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:53:43.254210454+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:46:05.399151358+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public class UserRequest  implements Serializable {
   private String firstName;
   private String lastName;

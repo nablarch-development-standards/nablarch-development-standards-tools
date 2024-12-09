@@ -2,6 +2,7 @@ package org.openapitools.model;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import java.util.Arrays;
 import nablarch.core.validation.ee.DecimalRange;
 import nablarch.core.validation.ee.Length;
 import nablarch.core.validation.ee.NumberRange;
@@ -18,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * エラーレスポンス
  */
 @JsonTypeName("ErrorResponse")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:59:13.642139079+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:46:07.954889834+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public class ErrorResponse   {
   private String message;
 

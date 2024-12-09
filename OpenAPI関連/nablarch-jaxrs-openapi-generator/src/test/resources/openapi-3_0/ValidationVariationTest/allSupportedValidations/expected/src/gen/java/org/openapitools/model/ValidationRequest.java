@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("ValidationRequest")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-02T21:56:09.500547077+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:40:02.319711249+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public class ValidationRequest   {
   private Integer integerPlainProperty;
   private Integer integerRequiredProperty;

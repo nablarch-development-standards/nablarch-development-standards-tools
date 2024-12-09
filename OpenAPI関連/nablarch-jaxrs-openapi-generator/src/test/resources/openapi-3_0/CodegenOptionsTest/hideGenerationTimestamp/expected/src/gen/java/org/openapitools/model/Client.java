@@ -1,5 +1,6 @@
 package org.openapitools.model;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 import java.util.Objects;

@@ -10,7 +10,7 @@ import java.util.List;
 import jakarta.ws.rs.*;
 
 @Path("/projects/{projectId}/clients")
-@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-11-29T20:53:43.584981295+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
+@jakarta.annotation.Generated(value = "nablarch.tool.openapi.codegen.JavaNablarchJaxrsServerCodegen", date = "2024-12-09T21:55:14.862304511+09:00[Asia/Tokyo]", comments = "Generator version: 7.10.0")
 public interface ClientReadApi {
     /**
      * GET  : プロジェクト内のクライアント一覧取得
