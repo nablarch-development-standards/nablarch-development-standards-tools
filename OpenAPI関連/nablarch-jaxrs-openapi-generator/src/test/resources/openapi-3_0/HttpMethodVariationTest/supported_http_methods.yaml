@@ -1,0 +1,84 @@
+---
+openapi: 3.0.3
+info:
+  title: OpenAPI Editor
+  version: 0.0.1
+servers:
+- url: http://localhost:9080
+  description: OpenAPI Editor description
+tags:
+- name: http
+paths:
+  /http-methods/get:
+    get:
+      tags:
+      - http
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /http-methods/head:
+    head:
+      tags:
+      - http
+      responses:
+        "200":
+          description: head
+  /http-methods/options:
+    options:
+      tags:
+      - http
+      responses:
+        "200":
+          description: options
+  /http-methods/patch:
+    patch:
+      tags:
+      - http
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /http-methods/post:
+    post:
+      tags:
+      - http
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /http-methods/put:
+    put:
+      tags:
+      - http
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
