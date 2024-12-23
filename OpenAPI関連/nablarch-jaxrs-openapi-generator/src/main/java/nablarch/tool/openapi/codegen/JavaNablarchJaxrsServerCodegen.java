@@ -100,10 +100,8 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
         // GeneratorのMustacheテンプレートの配置先
         templateDir = "JavaNablarchJaxRs";
 
-        // デフォルトでBean Validation用のアノテーションは生成しない
-        setUseBeanValidation(false);
-
         // 継承したクラスから、サポートしないオプションを削除
+        removeOption("title");
         removeOption("groupId");
         removeOption("artifactId");
         removeOption("artifactVersion");
@@ -137,14 +135,41 @@ public class JavaNablarchJaxrsServerCodegen extends AbstractJavaJAXRSServerCodeg
         removeOption(JavaJAXRSSpecServerCodegen.USE_MUTINY);
         removeOption(AbstractJavaCodegen.DISABLE_HTML_ESCAPING);
         removeOption(AbstractJavaCodegen.USE_JAKARTA_EE);
+        removeOption(CodegenConstants.WITH_XML);
+        removeOption(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS);
+        removeOption(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING);
+        removeOption(AbstractJavaCodegen.BOOLEAN_GETTER_PREFIX);
+        removeOption(AbstractJavaCodegen.CAMEL_CASE_DOLLAR_SIGN);
+        removeOption(AbstractJavaCodegen.CONTAINER_DEFAULT_TO_NULL);
+        removeOption(AbstractJavaCodegen.DATE_LIBRARY);
+        removeOption(CodegenConstants.DISALLOW_ADDITIONAL_PROPERTIES_IF_NOT_PRESENT);
+        removeOption(AbstractJavaCodegen.DISCRIMINATOR_CASE_SENSITIVE);
+        removeOption(CodegenConstants.ENSURE_UNIQUE_PARAMS);
+        removeOption(AbstractJavaCodegen.IGNORE_ANYOF_IN_ENUM);
+        removeOption(CodegenConstants.ENUM_UNKNOWN_DEFAULT_CASE);
+        removeOption(CodegenConstants.INVOKER_PACKAGE);
+        removeOption(CodegenConstants.IMPL_FOLDER);
+        removeOption(CodegenConstants.LEGACY_DISCRIMINATOR_BEHAVIOR);
+        removeOption(CodegenConstants.PREPEND_FORM_OR_BODY_PARAMETERS);
+        removeOption(CodegenConstants.SORT_MODEL_PROPERTIES_BY_REQUIRED_FLAG);
+        removeOption(AbstractJavaCodegen.GENERATE_CONSTRUCTOR_WITH_ALL_ARGS);
+        removeOption(AbstractJavaCodegen.TEST_OUTPUT);
+        removeOption(AbstractJavaCodegen.USE_ONE_OF_INTERFACES);
+        removeOption(USE_BEANVALIDATION);
+
+        // デフォルトでBean Validation用のアノテーションは生成しない
+        useBeanValidation = false;
 
         // オプションのデフォルト値を調整
         // インターフェースのみの生成とする
         updateOption(JavaJAXRSSpecServerCodegen.INTERFACE_ONLY, "true");
         // 生成するコードにSwagger Coreのアノテーションを付与しない
         updateOption(JavaJAXRSSpecServerCodegen.USE_SWAGGER_ANNOTATIONS, "false");
+        // ヘルプ表示の際にデフォルト値を false に表示するために再設定
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations", useBeanValidation));
 
         // サポート対象外にしたオプションの値を指定
+        setEnsureUniqueParams(true);
         setOpenApiNullable(false);
         setUseJakartaEe(true); // Jakarta EEのみサポート（Java EEはサポートしない）
         setDateLibrary("java8");  // 日付型はJava 8のDate and Time APIのものを使う
